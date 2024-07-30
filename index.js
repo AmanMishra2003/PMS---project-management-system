@@ -27,9 +27,14 @@ const UserRouter = require('./router/userRouter')
 const ProjectRouter = require('./router/projectRouter')
 const TaskRouter = require('./router/taskRouter')
 
+//locals
+app.use((req,res,next)=>{
+    res.locals.currentPath = req.path
+
+    next()
+})
 
 //routers
-
 app.get('/',(req,res)=>{
     res.render('homePage')
 })
@@ -37,8 +42,6 @@ app.get('/',(req,res)=>{
 app.use('/project',ProjectRouter)
 app.use('/project/:projectId/tasks',TaskRouter)
 app.use('/user',UserRouter)
-
-
 
 
 app.listen(3000,()=>{

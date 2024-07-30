@@ -7,7 +7,7 @@ const Project = require('../model/projectModel')
 
 router.route('/')
     .get((req,res)=>{
-        res.send('project route')
+        res.render('project/projectHome')
     })
 
 module.exports = router;

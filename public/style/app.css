@@ -1,3 +1,78 @@
-h1{
-    color: red !important;
+.nav-heading{
+    filter: drop-shadow(-5px 15px 17px #0501fe);
+}
+
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.hamburger{
+    min-height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5em .5em;
+}
+
+.main-container{
+    position: relative !important;   
+}
+
+.sidebar-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    width: 15em;
+    min-width: 300px;
+    transition: left 500ms;
+}
+
+.profile-sidebar-container{
+    position: fixed;
+    top: 0;
+    right: -100%;
+    min-height: 100vh;
+    width: 15em;
+    min-width: 300px;
+    transition: right 500ms;
+}
+
+.sidebar-container.openSidebar{
+    left: 0;
+}
+
+.sidebar-container.closeSlider{
+    left: -100%;
+}
+.profile-sidebar-container.openSidebar{
+    right: 0;
+}
+
+.hamburger svg {
+    transition: transform 0.3s ease; /* Smooth rotation transition */
+}
+
+.nav-item a:hover{
+    color: white !important;
+}
+
+
+@media (max-width:770px ) and (orientation : portrait)  {
+    .sidebar-container{
+        position: fixed;
+        min-height: 100vh; 
+        left: -100%;
+        /* z-index: 20; */
+        /* padding: 2em 1em; */
+    }
+    
+
+   
 }
