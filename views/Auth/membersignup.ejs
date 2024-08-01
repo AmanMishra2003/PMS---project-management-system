@@ -1,0 +1,128 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+    <section class="auth-container">
+        <div class="container d-flex align-items-center justify-content-center " style="min-height: 80vh;">
+            <div class=" col-12 col-lg-6 col-md-8 col-sm-10">
+                <div class="card shadow-sm">
+                    <div class="card-body py-3 px-3">
+                        <div class="border-bottom pb-2 mb-2">
+                            <h3 class="card-title text-center mb-2 p">Sign Up</h3>
+                            <p class="small text-secondary m-0 text-center"> Team Member </p>
+                        </div>
+                        <form id="memberSignup">
+                            <div class="mb-3">
+                                <label for="username" class="form-label small mb-0">Username</label>
+                                <input type="text" class="form-control form-control-sm" id="username"
+                                    placeholder="Enter your username" name="username">
+                                <div id="usernameError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label small mb-0">Email address</label>
+                                <input type="email" class="form-control form-control-sm" id="email"
+                                    autocapitalize="email" placeholder="Enter your email" name="email">
+                                <div id="emailError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="firstname" class="form-label small mb-0">First Name</label>
+                                <input type="text" class="form-control form-control-sm" id="firstname"
+                                    placeholder="Enter your first name" name="firstname">
+                                <div id="firstnameError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastname" class="form-label small mb-0">Last Name</label>
+                                <input type="text" class="form-control form-control-sm" id="lastname"
+                                    placeholder="Enter your last name" name="lastname">
+                                <div id="lastnameError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label small mb-0">Password</label>
+                                <input type="password" class="form-control form-control-sm" id="password"
+                                    autocomplete="password" placeholder="Enter your password" name="password">
+                                <div id="passwordError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-sm btn-primary">Sign Up</button>
+                            </div>
+                        </form>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- <script src="/script/memberSignup.js"></script> -->
+
+    <script>
+        const form = document.querySelector('#memberSignup')
+        const usernameError = document.querySelector('#usernameError')
+        const emailError = document.querySelector('#emailError')
+        const firstnameError = document.querySelector('#firstnameError')
+        const lastnameError = document.querySelector('#lastnameError')
+        const passwordError = document.querySelector('#passwordError')
+        
+        
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            usernameError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            firstnameError.textContent = '';
+            lastnameError.textContent = '';
+        
+            const username = form.username.value;
+            const email = form.email.value;
+            const firstname = form.firstname.value;
+            const lastname = form.lastname.value;
+            const password = form.password.value;
+            console.log(username)
+            console.log(email)
+            console.log(firstname)
+            console.log(lastname)
+            console.log(password)
+        
+            try {
+                const result = await fetch(`/user/member/signup`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            username, email, firstname, lastname, password
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+        
+                    }
+                )
+                const res = await result.json()
+                console.log(res)
+                if (res.err) {
+                    usernameError.textContent = res.err.username;
+                    emailError.textContent = res.err.email;
+                    passwordError.textContent = res.err.password;
+                    firstnameError.textContent = res.err.firstname;
+                    lastnameError.textContent = res.err.lastname;
+                } else {
+                    window.location.assign('/project')
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        
+        })
+        </script>
+   

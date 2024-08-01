@@ -1,5 +1,6 @@
 <div class="d-flex flex-column flex-shrink-0 py-5 px-2 text-bg-dark profile-sidebar-container ">
     <ul class="nav nav-pills flex-column mb-auto">
+      <% if (!currentUser) { %>
       <li class="nav-item mt-3">
         <a href="/user/login" class="nav-link d-flex align-item-center <%= currentPath.split('/').includes('login')?'active text-white fs-bold':'text-secondary' %>   " aria-current="page" style="gap: 5px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-house-fill " viewBox="0 0 16 16">
@@ -17,6 +18,7 @@
            SignUp
         </a>
       </li>
+      <% } else { %>
       <li class="nav-item mt-3">
         <a href="/user/logout" class="nav-link  d-flex align-item-center  text-secondary " aria-current="page" style="gap: 5px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-house-fill " viewBox="0 0 16 16">
@@ -27,6 +29,27 @@
             Logout
         </a>
       </li>
+      <li class="nav-item mt-3">
+        <a href="/user/member/signup" class="nav-link  d-flex align-item-center  <%= currentPath==='/user/member/signup'?'active text-white':'text-secondary' %>  " aria-current="page" style="gap: 5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-house-fill " viewBox="0 0 16 16">
+              <path d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7m.354 5.854 1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V10.5a.5.5 0 0 0-1 0v2.793l-.646-.647a.5.5 0 0 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+  <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+</svg>
+</svg>
+              </svg>
+            Add Team Members
+        </a>
+      </li>
+      <li class="nav-item mt-3">
+        <a href="/user/member" class="nav-link  d-flex align-item-center  <%= currentPath==='/user/member'?'active text-white':'text-secondary' %>  " aria-current="page" style="gap: 5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" class="bi bi-house-fill " viewBox="0 0 16 16">
+              <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+</svg>
+              </svg>
+            All Team Members
+        </a>
+      </li>
+      <% } %>
       <!-- <li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
@@ -52,5 +75,15 @@
         </a>
       </li> -->
     </ul>
+    <% if (currentUser) { %>
     <hr>
+    <div class="w-100">
+      <div class="text-center text-capitalize text-secondary h3">
+        welcome, <%=  currentUser.username %>
+      </div>
+      <div class="text-center text-capitalize text-secondary small">
+        <%=  currentUser.email %>
+      </div>
+    </div>
+    <% } %>
   </div>

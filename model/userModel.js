@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const {isEmail} = require('validator')
 const argon2 = require('argon2');
 const Schema = mongoose.Schema
+// const opts = {toJSON :{virtuals:true}} //this virtuals : true indicate that virtual property should be included in the output
 
 const UserSchema = Schema({
     username : {
@@ -41,8 +42,20 @@ const UserSchema = Schema({
             message :'enum validator failed for path `{PATH}` with value `{VALUE}`'
         },
         lowercase : true
-    }
+    },
+    manager : {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    member :[{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 })
+
+UserSchema.virtual('fullname').get(function() {
+    return `${this.firstname} ${this.lastname}`;
+});
 
 UserSchema.pre('save',async function(next){
     if(!this.isModified('password')) return next()

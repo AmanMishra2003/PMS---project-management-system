@@ -27,6 +27,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 app.use(cookieParser())
+const {checkUser} = require('./middleware/middleware')
 
 //router
 const UserRouter = require('./router/userRouter')
@@ -34,6 +35,7 @@ const ProjectRouter = require('./router/projectRouter')
 const TaskRouter = require('./router/taskRouter')
 
 //locals
+app.use(checkUser)
 app.use((req,res,next)=>{
     res.locals.currentPath = req.path
     next()

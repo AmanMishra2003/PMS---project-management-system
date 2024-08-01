@@ -1,0 +1,35 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+<section class="teamMember-container">
+    <div class="w-100 d-flex justify-content-between align-items-end px-2 py-3 border-bottom">
+        <p class="h4 text-capitalize  project-title m-0 fw-bolder"><%= manager.fullname%> </p>
+        <div>
+            <p class="text-capitalize m-0 fw-bold small">Username : <%= manager.username%> </p>
+        </div>
+    </div>
+    <div class="container mt-2">
+        <table class="table table-dark table-hover">
+            <thead class="">
+                <tr>
+                    <th scope="col" class="small">Full Name</th>
+                    <th scope="col" colspan="2" class="small">Email ID</th>
+                </tr>
+            </thead>
+            <tbody id="teamTableBody">
+                <% manager.member.forEach(ele => { %>
+                    <tr>
+                        <td class="text-capitalize"><%= ele.fullname %></td>
+                        <td><%= ele.email %></td>
+                        <td>
+                            <form action="/user/member/<%= ele._id %>?_method=DELETE" method="post">
+                                <button class="btn btn-sm btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+              
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</section>

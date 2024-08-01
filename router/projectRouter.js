@@ -4,12 +4,13 @@ const router = express.Router()
 
 //model
 const Project = require('../model/projectModel')
+const {AuthorizeMiddleware} = require('../middleware/middleware')
 
 //validation middleware
 const {projectValidate} = require('../joi/validate')
 
 router.route('/')
-    .get(projectController.projectPage)
+    .get(AuthorizeMiddleware,projectController.projectPage)
     .post(projectValidate,projectController.addProjectToDatabase)
 
 router.route('/new')
