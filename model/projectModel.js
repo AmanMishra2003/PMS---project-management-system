@@ -2,6 +2,11 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+const ImageSchema = {
+    filename : String,
+    path : String
+}
+
 const ProjectSchema = Schema({
     projectName :{
         type: String,
@@ -12,11 +17,15 @@ const ProjectSchema = Schema({
     publishDate :{
         type: Date,
     },
-    Desciption : {
+    description : {
         type: String,
         required : [true,'Project Name is required'],
         lowercase : true,
     },
+    image:String,
+    // image :[{
+    //     ImageSchema
+    // }],
     task : [
         {
             type : Schema.Types.ObjectId,

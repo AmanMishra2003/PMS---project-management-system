@@ -4,6 +4,7 @@ const svgIcon = burgerToogle.querySelector('svg')
 const sidebar = document.querySelector('.sidebar-container')
 const profileSidebar = document.querySelector('.profile-sidebar-container')
 const profileToggleButton = document.querySelector('.profile')
+const bodyContainer = document.querySelector('.body-container')
 
 burgerToogle.addEventListener('click', () => {
     sidebar.classList.toggle('openSidebar')
@@ -22,9 +23,11 @@ profileToggleButton.addEventListener('click', () => {
     }
     if (window.innerWidth >= 700) {
         if (profileSidebar.classList.contains('openSidebar')) {
+            bodyContainer.style.marginLeft = '0px'
             sidebar.classList.add('closeSlider')
         } else {
             sidebar.classList.remove('closeSlider')
+            bodyContainer.style.marginLeft = '300px'
         }
 
     }

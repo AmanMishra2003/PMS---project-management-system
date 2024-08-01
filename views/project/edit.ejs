@@ -1,0 +1,85 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+<section class="section-addProject">
+    <div class="container mt-2">
+        <h3 class="mb-3 text-primary">Edit Project Details</h3>
+        <form>
+            <div class="mb-3 input-group-sm">
+                <label for="projectName" class="form-label small">Project Name</label> 
+                <input type="text" class="form-control" id="projectName" placeholder="Enter project name" name="projectName" value="<%= data.projectName %>" >
+                <span class="small text-warning projectNameError"></span>
+                
+            </div>
+            <div class="mb-3 input-group-sm">
+                <!-- <label for="projectFile" class="form-label small">Upload Project File</label>
+                <input class="form-control" type="file" id="projectFile" multiple name="image"> -->
+                <label for="image" class="form-label small">Upload Project File</label>
+                <input type="text" class="form-control" id="image" placeholder="Enter project image" name="image" value="<%= data.projectName %>" >
+                <span class="small text-warning imageError"></span>
+            </div>
+            <!-- <div class="mb-3 input-group-sm">
+                <label for="projectFile" size="3" class="form-label small">Select Team Members</label>
+                <select class="form-select form-select-sm" aria-label="Select Members" name="workingMembers" multiple="true">
+                    <option selected>Select Team Members</option>
+                    <option value="karan">One</option>
+                    <option value="divya">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                </select>
+            </div> -->
+            <div class="mb-3 input-group-sm">
+                <label for="projectDescription" class="form-label small">Project Description</label>
+                <textarea class="form-control" id="projectDescription" rows="15" placeholder="Enter project description" name="description" ><%= data.description %></textarea>
+                <span class=" small text-warning descriptionError"></span>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    const form = document.querySelector('form')
+    const projectNameError = document.querySelector('.projectNameError')
+    const imageError = document.querySelector('.imageError')
+    const descriptionError = document.querySelector('.descriptionError')
+    form.addEventListener('submit',async(e)=>{
+        e.preventDefault();
+
+        projectNameError.textContent = ''
+        imageError.textContent = ''
+        descriptionError.textContent = ''
+
+        const projectName = form.projectName.value
+        const image = form.image.value
+        // const workingMembers = Array.from(form.workingMembers.selectedOptions ).map(options=>options.value)
+        const description = form.description.value
+
+        try{
+            const res = await fetch('/project//edit',{
+                method: 'PATCH',
+                headers :{
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    projectName, image, description
+                })
+            })
+            const result =  await res.json();
+            console.log(result)
+            if(result.err){
+                projectNameError.textContent = result.projectName
+                imageError.textContent = result.image
+                descriptionError.textContent = result.description
+            }
+            location.assign('/project')
+
+        }catch(err){
+            console.log()
+        }
+
+        
+
+    })
+</script>

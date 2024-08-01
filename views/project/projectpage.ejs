@@ -1,0 +1,14 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+<section class="section-singleProject">
+        <div class="w-100 d-flex justify-content-between align-items-center px-2 py-3 border-bottom">
+            <p class="h4 text-capitalize roboto project-title">Project</p>
+            <div class="d-flex align-item-center" style="gap: 10px;">
+                <form action="/project/<%= data.id %>?_method=DELETE" method="POST"><button class="btn btn-sm btn-danger" type="submit">Delete Project</button></form>
+                <a href="/project/<%= data.id %>/edit" class="btn btn-sm btn-warning" style="max-height: fit-content;"> Edit Project</a>
+            </div>
+        </div>
+        
+        <!-- <div class="project-container">
+        </div> -->
+</section>
