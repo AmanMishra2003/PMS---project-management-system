@@ -1,4 +1,3 @@
-
 const form = document.querySelector('#memberSignup')
 const usernameError = document.querySelector('#usernameError')
 const emailError = document.querySelector('#emailError')
@@ -28,7 +27,7 @@ form.addEventListener('submit', async (e) => {
     console.log(password)
 
     try {
-        const result = await fetch(`/user/member/${currentUser}/signup`,
+        const result = await fetch(`/user/member/signup`,
             {
                 method: 'POST',
                 body: JSON.stringify({
