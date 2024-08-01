@@ -1,0 +1,83 @@
+<%- layout('./auth/authboilerplate.ejs') %>
+
+    <section class="auth-container">
+        <div class="container d-flex align-items-center justify-content-center min-vh-100">
+            <div class=" col-12 col-lg-6 col-md-8 col-sm-10">
+                <div class="card shadow-sm">
+                    <div class="card-body py-3 px-3">
+                        <div class="border-bottom pb-2 mb-2">
+                            <h3 class="card-title text-center mb-2 p">Sign Up</h3>
+                            <p class="small text-secondary m-0 text-center">Project Manger</p>
+                        </div>
+                        <form id="managerSignup">
+                            <div class="mb-3">
+                                <label for="username" class="form-label small mb-0">Username</label>
+                                <input type="text" class="form-control form-control-sm" id="username"
+                                    placeholder="Enter your username" name="username">
+                                <div id="usernameError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label small mb-0">Email address</label>
+                                <input type="email" class="form-control form-control-sm" id="email"
+                                    autocapitalize="email" placeholder="Enter your email" name="email">
+                                <div id="emailError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="firstname" class="form-label small mb-0">First Name</label>
+                                <input type="text" class="form-control form-control-sm" id="firstname"
+                                    placeholder="Enter your first name" name="firstname">
+                                <div id="firstnameError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastname" class="form-label small mb-0">Last Name</label>
+                                <input type="text" class="form-control form-control-sm" id="lastname"
+                                    placeholder="Enter your last name" name="lastname">
+                                <div id="lastnameError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label small mb-0">Password</label>
+                                <input type="password" class="form-control form-control-sm" id="password"
+                                    autocomplete="password" placeholder="Enter your password" name="password">
+                                <div id="passwordError" class="small text-danger text-capitalize"
+                                    style="font-size: .75rem;">
+                                </div>
+                            </div>
+                            <!-- <div class="mb-3">
+                                <label for="role" class="form-label small mb-0">Role</label>
+                                <select class="form-select form-select-sm" id="role" name="role">
+                                    <option selected disabled>Select your role</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="teammember">Team Member</option>
+                                </select>
+                                <div id="roleError" class="invalid-feedback">
+                                </div>
+                            </div> -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-sm btn-primary">Sign Up</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <p class="small text-secondary">Already have an account? <a href="/user/login"
+                                    class="text-decoration-none text-black">Login</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <script src="/script/managerSignup.js"></script>
+
+   

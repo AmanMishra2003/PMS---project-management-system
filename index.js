@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate')
 const path = require('path')
 const methodOverride = require('method-override')
+const cookieParser = require('cookie-parser')
 
 //connection to database
 const DbUrl = process.env.DBURL
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
+app.use(cookieParser())
 
 //router
 const UserRouter = require('./router/userRouter')
@@ -34,7 +36,6 @@ const TaskRouter = require('./router/taskRouter')
 //locals
 app.use((req,res,next)=>{
     res.locals.currentPath = req.path
-
     next()
 })
 
@@ -47,6 +48,10 @@ app.use('/project',ProjectRouter)
 app.use('/project/:projectId/tasks',TaskRouter)
 app.use('/user',UserRouter)
 
+
+app.use((err,req,res,next)=>{
+   res.render('error',{err})
+})
 
 app.listen(3000,()=>{
     console.log('Connection Listening!!')

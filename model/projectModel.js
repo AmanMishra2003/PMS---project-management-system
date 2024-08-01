@@ -20,7 +20,6 @@ const ProjectSchema = Schema({
     description : {
         type: String,
         required : [true,'Project Name is required'],
-        lowercase : true,
     },
     image:String,
     // image :[{

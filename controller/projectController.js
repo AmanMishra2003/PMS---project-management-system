@@ -1,15 +1,17 @@
 const Project = require('../model/projectModel')
 const asyncHandler = require('express-async-handler')
+const {handleError} = require('../middleware/handleError')
 
-function handleError(err){
-    const error={};
-    if(err.code===11000){
-        if(Object.keys(err.keyValue).includes('projectName')){
-            error['projectName'] = 'Project Name Already Exist'
-        }
-    }
-    return error;
-}
+// function handleError(err){
+//     const error={};
+//     console.log(err)
+//     if(err.code===11000){
+//         if(Object.keys(err.keyValue).includes('projectName')){
+//             error['projectName'] = 'Project Name Already Exist'
+//         }
+//     }
+//     return error;
+// }
 
 
 module.exports.projectPage = asyncHandler(async(req,res)=>{
@@ -38,15 +40,22 @@ module.exports.addProjectToDatabase = async(req,res)=>{
     }
 }
 
-module.exports.editProjectForm = async(req,res)=>{
+module.exports.editProjectForm = asyncHandler(async(req,res)=>{
     const {id} = req.params;
     const data = await Project.findById(id);
     res.render('project/edit',{data})
-}
+})
 
-// module.exports.editProjectToDatabase = async(req,res)=>{
-//     res.render('project/edit')
-// }
+module.exports.editProjectToDatabase = async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const data = await Project.findByIdAndUpdate(id, req.body , {runValidation : true})
+        res.status(200).json({id : data.id})
+    }catch(error){
+        const err = handleError(error)
+        res.status(400).json({err});
+    }
+}
 
 module.exports.deleteProject = asyncHandler(async(req,res)=>{
     const {id} = req.params;

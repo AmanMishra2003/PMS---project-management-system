@@ -28,9 +28,15 @@
                 </select>
             </div> -->
             <div class="mb-3 input-group-sm">
-                <label for="projectDescription" class="form-label small">Project Description</label>
+                <label for="projectDescription" class="form-label small">Project Description</label> <span class="ms-3" ><button class="btn btn-sm  btn-primary rounded-pill bg-white border-white text-black py-0" id="preview-btn">Generate Preview</button> </span>
+                <p class="small px-2">To better write the line for spacing and alignment use '< br >' and '< hr >' tags in HTML, you can ensure clarity and readability by properly structuring the HTML.</p>
                 <textarea class="form-control" id="projectDescription" rows="15" placeholder="Enter project description" name="description" ></textarea>
                 <span class="small text-warning descriptionError "></span>
+            </div>
+
+            <div class="mb-3 d-none preview bg-white text-black rounded">
+                <p class="small ">Description Preview </p> 
+                <div class="description-preview px-2 "></div>
             </div>
 
 
@@ -44,10 +50,24 @@
     const projectNameError = document.querySelector('.projectNameError')
     const imageError = document.querySelector('.imageError')
     const descriptionError = document.querySelector('.descriptionError')
+
+    //preview
+    const previewContainer = document.querySelector('.preview')
+    const previewBtn = document.querySelector('#preview-btn')
+    const preview = document.querySelector('.description-preview')
     
-            // projectNameError.textContent = ''
-            // imageError.textContent = ''
-            // descriptionError.textContent = ''
+    projectNameError.textContent = ''
+    imageError.textContent = ''
+    descriptionError.textContent = ''
+
+    previewBtn.addEventListener('click',(e)=>{
+        if(form.description.value){
+        e.preventDefault();
+        preview.innerHTML = form.description.value
+        previewContainer.classList.remove('d-none')
+        }
+    })
+
     form.addEventListener('submit',async(e)=>{
         e.preventDefault();
 
@@ -80,8 +100,5 @@
         }catch(err){
             console.log()
         }
-
-        
-
     })
 </script>

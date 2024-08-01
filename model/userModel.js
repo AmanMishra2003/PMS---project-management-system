@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const {isEmail} = require('validator')
+const argon2 = require('argon2');
 const Schema = mongoose.Schema
 
 const UserSchema = Schema({
@@ -14,7 +15,8 @@ const UserSchema = Schema({
         type : String,
         required : [true, 'Email is required'],
         unique : true,
-        index : true
+        index : true,
+        lowercase :true
     },
     firstname :{
         type: String,
@@ -41,5 +43,25 @@ const UserSchema = Schema({
         lowercase : true
     }
 })
+
+UserSchema.pre('save',async function(next){
+    if(!this.isModified('password')) return next()
+    this.password = await argon2.hash(this.password);
+    next();
+})
+
+UserSchema.statics.CompareAndLogin = async function(email,password){
+    const user = await this.findOne({email})
+    if(!user){
+        throw Error('User does not exist')
+    }
+    const verify = await argon2.verify(user.password, password)
+    if(!verify){
+        throw Error('Incorrect Password!')
+    }
+    return user;
+}
+
+
 
 module.exports = mongoose.model('User', UserSchema)

@@ -17,7 +17,7 @@ router.route('/new')
 
 router.route('/:id')
     .get(projectController.individualProject)
-//     .patch(projectController.editProjectToDatabase)
+    .patch(projectValidate,projectController.editProjectToDatabase)
     .delete(projectController.deleteProject)
 
 router.route('/:id/edit')

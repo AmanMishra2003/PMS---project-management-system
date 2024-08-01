@@ -1,21 +1,20 @@
 <%- layout('./layout/boilerplate.ejs') %>
 
-<section class="section-addProject">
+<section class="section-editProject">
     <div class="container mt-2">
-        <h3 class="mb-3 text-primary">Edit Project Details</h3>
+        <h3 class="mb-3 text-primary">Edit Project</h3>
         <form>
             <div class="mb-3 input-group-sm">
                 <label for="projectName" class="form-label small">Project Name</label> 
-                <input type="text" class="form-control" id="projectName" placeholder="Enter project name" name="projectName" value="<%= data.projectName %>" >
+                <input type="text" class="form-control" id="projectName" name="projectName" value="<%= data.projectName %>">
                 <span class="small text-warning projectNameError"></span>
-                
             </div>
             <div class="mb-3 input-group-sm">
                 <!-- <label for="projectFile" class="form-label small">Upload Project File</label>
                 <input class="form-control" type="file" id="projectFile" multiple name="image"> -->
                 <label for="image" class="form-label small">Upload Project File</label>
-                <input type="text" class="form-control" id="image" placeholder="Enter project image" name="image" value="<%= data.projectName %>" >
-                <span class="small text-warning imageError"></span>
+                <input type="text" class="form-control" id="image" name="image" value="<%=data.image%>" >
+                <span class=" small text-warning imageError"></span>
             </div>
             <!-- <div class="mb-3 input-group-sm">
                 <label for="projectFile" size="3" class="form-label small">Select Team Members</label>
@@ -28,9 +27,15 @@
                 </select>
             </div> -->
             <div class="mb-3 input-group-sm">
-                <label for="projectDescription" class="form-label small">Project Description</label>
-                <textarea class="form-control" id="projectDescription" rows="15" placeholder="Enter project description" name="description" ><%= data.description %></textarea>
-                <span class=" small text-warning descriptionError"></span>
+                <label for="projectDescription" class="form-label small">Project Description</label> <span class="ms-3" ><button class="btn btn-sm  btn-primary rounded-pill bg-white border-white text-black py-0" id="preview-btn">Generate Preview</button> </span>
+                <p class="small px-2">To better write the line for spacing and alignment use '< br >' and '< hr >' tags in HTML, you can ensure clarity and readability by properly structuring the HTML.</p>
+                <textarea class="form-control" id="projectDescription" rows="15" placeholder="Enter project description" name="description" ><%=data.description %></textarea>
+                <span class="small text-warning descriptionError "></span>
+            </div>
+
+            <div class="mb-3 d-none preview bg-white text-black rounded">
+                <p class="small ">Description Preview </p> 
+                <div class="description-preview px-2 "></div>
             </div>
 
 
@@ -44,20 +49,35 @@
     const projectNameError = document.querySelector('.projectNameError')
     const imageError = document.querySelector('.imageError')
     const descriptionError = document.querySelector('.descriptionError')
+
+    //preview
+    const previewContainer = document.querySelector('.preview')
+    const previewBtn = document.querySelector('#preview-btn')
+    const preview = document.querySelector('.description-preview')
+    
+    projectNameError.textContent = ''
+    imageError.textContent = ''
+    descriptionError.textContent = ''
+
+    previewBtn.addEventListener('click',(e)=>{
+        if(form.description.value){
+        e.preventDefault();
+        preview.innerHTML = form.description.value
+        previewContainer.classList.remove('d-none')
+        }
+    })
+
     form.addEventListener('submit',async(e)=>{
         e.preventDefault();
-
-        projectNameError.textContent = ''
-        imageError.textContent = ''
-        descriptionError.textContent = ''
 
         const projectName = form.projectName.value
         const image = form.image.value
         // const workingMembers = Array.from(form.workingMembers.selectedOptions ).map(options=>options.value)
         const description = form.description.value
 
+        console.log(projectName)
         try{
-            const res = await fetch('/project//edit',{
+            const res = await fetch(`/project/<%= data.id%>`,{
                 method: 'PATCH',
                 headers :{
                     'Content-Type' : 'application/json'
@@ -69,17 +89,16 @@
             const result =  await res.json();
             console.log(result)
             if(result.err){
-                projectNameError.textContent = result.projectName
-                imageError.textContent = result.image
-                descriptionError.textContent = result.description
+                projectNameError.textContent = result.err.projectName
+                imageError.textContent = result.err.image
+                descriptionError.textContent = result.err.description
             }
-            location.assign('/project')
+            else{
+                window.location.assign(`/project/${result.id}`);
+            }
 
         }catch(err){
             console.log()
         }
-
-        
-
     })
 </script>

@@ -12,13 +12,16 @@
   </head>
  <body>
     <%- include('./partials/navbar.ejs') %>
-    <section class="homePage-section">
+    <div class="main-container">
+      <section class="homePage-section">
         <div class="d-flex flex-column align-item-center justify-content-center " style="gap: 10px;">
             <img src="/images/flow.gif" alt="GifImage">
             <a href="/user/login" class="btn btn-primary" style="min-width: fit-content;">Enter PMS</a>
         </div>
-        
-    </section>
+      </section>
+      <%- include('./partials/profileSidebar.ejs') %>
+    </div>
+    
     <script src="/script/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

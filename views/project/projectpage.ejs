@@ -2,13 +2,20 @@
 
 <section class="section-singleProject">
         <div class="w-100 d-flex justify-content-between align-items-center px-2 py-3 border-bottom">
-            <p class="h4 text-capitalize roboto project-title">Project</p>
+            <p class="h4 text-capitalize roboto project-title m-0 fw-bolder"><%= data.projectName %></p>
             <div class="d-flex align-item-center" style="gap: 10px;">
                 <form action="/project/<%= data.id %>?_method=DELETE" method="POST"><button class="btn btn-sm btn-danger" type="submit">Delete Project</button></form>
                 <a href="/project/<%= data.id %>/edit" class="btn btn-sm btn-warning" style="max-height: fit-content;"> Edit Project</a>
             </div>
         </div>
         
-        <!-- <div class="project-container">
-        </div> -->
+        <div class="singleProject-container pt-3">
+            <div id="description">
+
+            </div>
+        </div>
 </section>
+
+<script>
+    document.querySelector('#description').innerHTML = <%- JSON.stringify(data.description)%>
+</script>
