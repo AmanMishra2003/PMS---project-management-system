@@ -1,17 +1,13 @@
 const Project = require('../model/projectModel')
 const asyncHandler = require('express-async-handler')
 const {handleError} = require('../middleware/handleError')
+const {cloudinary, storage} = require('../cloudinary')
 
-// function handleError(err){
-//     const error={};
-//     console.log(err)
-//     if(err.code===11000){
-//         if(Object.keys(err.keyValue).includes('projectName')){
-//             error['projectName'] = 'Project Name Already Exist'
-//         }
-//     }
-//     return error;
-// }
+//multer middleware 
+const multer = require('multer')
+const upload = multer({storage : storage})
+
+
 
 
 module.exports.projectPage = asyncHandler(async(req,res)=>{
