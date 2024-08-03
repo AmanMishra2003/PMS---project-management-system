@@ -16,7 +16,7 @@
       <section class="homePage-section">
         <div class="d-flex flex-column align-item-center justify-content-center " style="gap: 10px;">
             <img src="/images/flow.gif" alt="GifImage">
-            <a href="/user/login" class="btn btn-primary" style="min-width: fit-content;">Enter PMS</a>
+            <a href="<%= currentUser?'/project':'/user/login' %> " class="btn btn-primary" style="min-width: fit-content;">Enter PMS</a>
         </div>
       </section>
       <%- include('./partials/profileSidebar.ejs') %>

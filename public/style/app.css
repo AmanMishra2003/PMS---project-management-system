@@ -166,6 +166,16 @@ input, textarea, input::placeholder{
     letter-spacing: 1px;
 }
 
+.slide-image{
+    width: 40em;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+}
+
+input[name='deleteImages[]']:checked ~ label{
+    background-color: white !important;
+    color: red !important;
+}
 
 @media (max-width:770px ) and (orientation : portrait)  {
     .sidebar-container{

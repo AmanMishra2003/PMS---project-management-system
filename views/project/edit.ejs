@@ -3,31 +3,35 @@
 <section class="section-editProject">
     <div class="container mt-2">
         <h3 class="mb-3 text-primary">Edit Project</h3>
-        <form>
+        <form id="editprojectform" >
             <div class="mb-3 input-group-sm">
-                <label for="projectName" class="form-label small">Project Name</label> 
+                <label for="projectName" class="form-label small fw-bold">Project Name</label> 
                 <input type="text" class="form-control" id="projectName" name="projectName" value="<%= data.projectName %>">
                 <span class="small text-warning projectNameError"></span>
             </div>
-            <div class="mb-3 input-group-sm">
-                <!-- <label for="projectFile" class="form-label small">Upload Project File</label>
-                <input class="form-control" type="file" id="projectFile" multiple name="image"> -->
-                <label for="image" class="form-label small">Upload Project File</label>
-                <input type="text" class="form-control" id="image" name="image" value="<%=data.image%>" >
+            <div class="mb-3 input-group-sm ">
+                <label for="projectFile" class="form-label small fw-bold">Upload Project File</label>
+                <div class="border rounded px-3 py-2">
+                <input class="form-control form-control-sm" type="file" id="projectFile" multiple="true" name="image">
                 <span class=" small text-warning imageError"></span>
+                <% if (data.image) { %>
+                <div class="my-3 row gy-2 gx-2 align-item-center justify-content-md-start justify-content-center">
+                        <% data.image.forEach(ele => { %>
+                            <div class="col-6 col-sm-4 col-md-3 p-1 position-relative" style="width: 150px; aspect-ratio: 1/1;">
+                                <img src="<%= ele.path %>" class="img-fluid w-100 h-100" alt="">
+                                <spam class="position-absolute top-10 start-50 translate-middle badge ">
+                                    <input type="checkbox" class="btn-check" id="image-<%= ele.id%>" autocomplete="off" name="deleteImages[]" value="<%= ele.filename %>">
+                                    <label class="btn btn-danger" for="image-<%= ele.id%>">x</label>
+                                </spam>
+                            </div>    
+                           
+                        <%}) %>
+                </div>
+                <% } %>
+                </div>
             </div>
-            <!-- <div class="mb-3 input-group-sm">
-                <label for="projectFile" size="3" class="form-label small">Select Team Members</label>
-                <select class="form-select form-select-sm" aria-label="Select Members" name="workingMembers" multiple="true">
-                    <option selected>Select Team Members</option>
-                    <option value="karan">One</option>
-                    <option value="divya">Two</option>
-                    <option value="3">Three</option>
-                    <option value="4">Four</option>
-                </select>
-            </div> -->
             <div class="mb-3 input-group-sm">
-                <label for="projectDescription" class="form-label small">Project Description</label> <span class="ms-3" ><button class="btn btn-sm  btn-primary rounded-pill bg-white border-white text-black py-0" id="preview-btn">Generate Preview</button> </span>
+                <label for="projectDescription" class="form-label small fw-bold">Project Description</label> <span class="ms-3" ><button class="btn btn-sm  btn-primary rounded-pill bg-white border-white text-black py-0" id="preview-btn">Generate Preview</button> </span>
                 <p class="small px-2">To better write the line for spacing and alignment use '< br >' and '< hr >' tags in HTML, you can ensure clarity and readability by properly structuring the HTML.</p>
                 <textarea class="form-control" id="projectDescription" rows="15" placeholder="Enter project description" name="description" ><%=data.description %></textarea>
                 <span class="small text-warning descriptionError "></span>
@@ -37,6 +41,7 @@
                 <p class="small ">Description Preview </p> 
                 <div class="description-preview px-2 "></div>
             </div>
+            
 
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -45,60 +50,6 @@
 </section>
 
 <script>
-    const form = document.querySelector('form')
-    const projectNameError = document.querySelector('.projectNameError')
-    const imageError = document.querySelector('.imageError')
-    const descriptionError = document.querySelector('.descriptionError')
-
-    //preview
-    const previewContainer = document.querySelector('.preview')
-    const previewBtn = document.querySelector('#preview-btn')
-    const preview = document.querySelector('.description-preview')
-    
-    projectNameError.textContent = ''
-    imageError.textContent = ''
-    descriptionError.textContent = ''
-
-    previewBtn.addEventListener('click',(e)=>{
-        if(form.description.value){
-        e.preventDefault();
-        preview.innerHTML = form.description.value
-        previewContainer.classList.remove('d-none')
-        }
-    })
-
-    form.addEventListener('submit',async(e)=>{
-        e.preventDefault();
-
-        const projectName = form.projectName.value
-        const image = form.image.value
-        // const workingMembers = Array.from(form.workingMembers.selectedOptions ).map(options=>options.value)
-        const description = form.description.value
-
-        console.log(projectName)
-        try{
-            const res = await fetch(`/project/<%= data.id%>`,{
-                method: 'PATCH',
-                headers :{
-                    'Content-Type' : 'application/json'
-                },
-                body: JSON.stringify({
-                    projectName, image, description
-                })
-            })
-            const result =  await res.json();
-            console.log(result)
-            if(result.err){
-                projectNameError.textContent = result.err.projectName
-                imageError.textContent = result.err.image
-                descriptionError.textContent = result.err.description
-            }
-            else{
-                window.location.assign(`/project/${result.id}`);
-            }
-
-        }catch(err){
-            console.log()
-        }
-    })
+    const dataId = <%- JSON.stringify(data.id)%>;
 </script>
+<script src="/script/editProject.js"></script>

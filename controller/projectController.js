@@ -1,17 +1,11 @@
 const Project = require('../model/projectModel')
 const asyncHandler = require('express-async-handler')
 const {handleError} = require('../middleware/handleError')
-const {cloudinary, storage} = require('../cloudinary')
-
-//multer middleware 
-const multer = require('multer')
-const upload = multer({storage : storage})
-
-
+const {cloudinary} = require('../cloudinary')
 
 
 module.exports.projectPage = asyncHandler(async(req,res)=>{
-        const data = await Project.find({});
+        const data = await Project.find({author: res.locals.currentUser});
         res.render('project/projecthome',{data})
 })
 
@@ -27,7 +21,15 @@ module.exports.individualProject = asyncHandler(async(req,res)=>{
 
 module.exports.addProjectToDatabase = async(req,res)=>{
     try {
+        const file = req.files.map(ele=>(
+            {
+                path : ele.path,
+                filename : ele.filename
+            }
+        ))
         const data = new Project(req.body);
+        data.author = res.locals.currentUser;
+        data.image = [...file]
         await data.save();
         res.status(200).json({ msg: 'Project added successfully' });
     } catch (error) {
@@ -44,8 +46,26 @@ module.exports.editProjectForm = asyncHandler(async(req,res)=>{
 
 module.exports.editProjectToDatabase = async(req,res)=>{
     try{
+        console.log(req.body)
         const {id} = req.params;
         const data = await Project.findByIdAndUpdate(id, req.body , {runValidation : true})
+
+        if(req.body.deleteImages){
+            req.body.deleteImages.forEach(async ele=>{
+                await cloudinary.uploader.destroy(ele);
+            })
+            await data.updateOne({$pull : {image : {filename : {$in : req.body.deleteImages}}}})
+        }
+        if(req.files){
+            const img = req.files.map(ele=>(
+                {
+                    path : ele.path,
+                    filename : ele.filename
+                }
+            ))
+            data.image.push(...img)
+        }
+        await data.save()
         res.status(200).json({id : data.id})
     }catch(error){
         const err = handleError(error)
@@ -55,6 +75,10 @@ module.exports.editProjectToDatabase = async(req,res)=>{
 
 module.exports.deleteProject = asyncHandler(async(req,res)=>{
     const {id} = req.params;
+    const project = await Project.findById(id);
+    project.image.forEach(async (ele)=>{
+        await cloudinary.uploader.destroy(ele.filename)
+    })
     await Project.findByIdAndDelete(id)
     res.redirect(`/project`)
 })

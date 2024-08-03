@@ -10,6 +10,31 @@
         </div>
         
         <div class="singleProject-container pt-3">
+            <% if (data.image) { %>
+            <div class="projectImages container mb-3">
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <% data.image.forEach((ele,i) => { %>
+                            <a href="<%= ele.path %>">
+                            <div class="carousel-item <%= i===0?'active':'' %>">
+                              <img class="d-block w-100 slide-image" src="<%= ele.path %>" alt="First slide">
+                            </div>
+                            </a>
+                        <% }) %>
+                    </div>
+                    <% if (data.image.length!==0) { %>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                  <% } %>
+            </div>
+            <% } %>
             <div id="description">
 
             </div>

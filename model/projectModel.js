@@ -21,10 +21,7 @@ const ProjectSchema = Schema({
         type: String,
         required : [true,'Project Name is required'],
     },
-    image:String,
-    // image :[{
-    //     ImageSchema
-    // }],
+    image :[ImageSchema],
     task : [
         {
             type : Schema.Types.ObjectId,
@@ -37,7 +34,7 @@ const ProjectSchema = Schema({
             ref :'User'
         }
     ],
-    Author :{
+    author :{
         type:Schema.Types.ObjectId,
         ref: 'User'
     }

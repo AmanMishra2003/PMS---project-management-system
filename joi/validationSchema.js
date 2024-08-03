@@ -6,11 +6,18 @@ module.exports.projectValidationSchema = Joi.object({
         'any.required': `Project Name is a required field`,
         'string.empty': `Project Name cannot be empty`
     }),
-    image: Joi.string(),
+    image: Joi.object(),
     description: Joi.string().required().messages({
         'any.required': `Description is a required field`,
         'string.empty': `Description cannot be empty`
-    })
+    }),
+    deleteImages : Joi.array()
+
+    //can user joi alternatives if u want choice between schema datatype
+    // deleteImages : Joi.alternatives().try(
+    //     Joi.array(),
+    //     Joi.string()
+    // )
 })
 
 module.exports.signupValidationSchema = Joi.object({

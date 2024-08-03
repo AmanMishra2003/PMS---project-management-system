@@ -10,8 +10,10 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-      folder: (req,filename)=>{
-        console.log(filename)
+      folder: (req,file)=>{
+            if(file.fieldname==='image'){
+                return 'PMS/project'
+            }
       },
     },
     allowedFormat : ['png','jpeg','jpg']
