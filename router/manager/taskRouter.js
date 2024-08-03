@@ -31,9 +31,20 @@ router.route('/:id')
     .get(
         taskController.singleTaskPage
     )
+    .patch(
+        upload.array('task'),
+        taskValidate,
+        taskController.editTask
+    )
     .delete(
         taskController.deleteTask
     )
+
+router.route('/:id/edit')
+    .get(
+        taskController.editTaskForm
+    )
+
 
 
 

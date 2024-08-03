@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header border-bottom py-4 d-flex justify-content-between">
                 <div class="d-flex align-items-center">
-                    <a href="/project/<%= projectId %>/tasks" class=" btn btn-dark">
+                    <a href="/project/<%= projectId %>" class=" btn btn-dark">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="white"
                             class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/></svg>
@@ -21,7 +21,7 @@
             <div class="card-body">
 
                 <div class="row align-item-center">
-                    <div class="col-12 col-md-7 py-5 order-1 px-4">
+                    <div class="col-12 col-xl-7 py-5 order-1 px-4">
                         <h5 class="card-title fw-bold mb-4 text-primary">Task Name:
                             <span class="text-capitalize text-white ">
                                 <%= taskData.taskName %>
@@ -45,7 +45,7 @@
                         </div>
 
                     </div>
-                    <div class="col-12 col-md-5 border-start border-end order-1">
+                    <div class="col-12 col-xl-5 border-start border-end order-1">
                         <% if (taskData.image && taskData.image.length!==0) { %>
                             <div id="carouselExample" class="carousel slide">
                                 <div class="carousel-inner">
@@ -81,7 +81,7 @@
 
 
                 <div class="mt-4 d-flex align-items-center justify-content-center justify-content-md-start">
-                    <a href="" class="btn btn-primary mx-2">Edit Task</a>
+                    <a href="/project/<%= projectId %>/tasks/<%= taskData._id%>/edit" class="btn btn-primary mx-2">Edit Task</a>
                     <form action="/project/<%= projectId %>/tasks/<%= taskData._id%>?_method=DELETE" method="POST">
                         <button  class="btn btn-danger mx-2">Delete Tasks</button>
                     </form>

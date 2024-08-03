@@ -69,4 +69,5 @@ module.exports.taskValidateSchema = Joi.object({
         'any.required': `Select a member`,
         'string.empty': `Select a member`
     }),
+    deleteImages : Joi.array()
 })

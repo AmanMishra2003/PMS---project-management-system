@@ -1,0 +1,88 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+<section class="taskAdd-section container-md mt-4">
+        <h2>Assign Task</h2>
+        <form id="addTask">
+            <div class="mb-3">
+                <label for="taskName" class="form-label">Task Name</label> <span class="form-text taskNameError text-warning">  </span>
+                <input type="text" class="form-control" id="taskName" name="taskName" value="<%= task.taskName %>" >
+                <div class="form-text text-white ">Enter the name of the task.</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label><span class="form-text descriptionError text-warning">  </span>
+                <textarea class="form-control" id="description" name="description" rows="3" ><%= task.description %></textarea>
+                <div class="form-text text-white ">Provide a brief description of the task.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="imageUpload" class="form-label">Upload Image</label>
+                <div class="border rounded px-3 py-2">
+                <input class="form-control" type="file" id="imageUpload" name="task" multiple="true" >
+                <div class="form-textt text-white">Upload an image related to the task <span class="fw-bold"> (optional)</span>.</div>
+                <% if (task.image) { %>
+                    <div class="my-3 row gy-2 gx-2 align-item-center justify-content-md-start justify-content-center">
+                            <% task.image.forEach(ele => { %>
+                                <div class="col-6 col-sm-4 col-md-3 p-1 position-relative" style="width: 150px; aspect-ratio: 1/1;">
+                                    <img src="<%= ele.path %>" class="img-fluid w-100 h-100" alt="">
+                                    <spam class="position-absolute top-10 start-50 translate-middle badge ">
+                                        <input type="checkbox" class="btn-check" id="image-<%= ele.id%>" autocomplete="off" name="deleteImages[]" value="<%= ele.filename %>">
+                                        <label class="btn btn-danger" for="image-<%= ele.id%>">x</label>
+                                    </spam>
+                                </div>    
+                               
+                            <%}) %>
+                    </div>
+                    <% } %>
+                    </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="deadline" class="form-label">Deadline</label><span class="form-text deadlineError text-warning">  </span>
+                <input type="date" class="form-control" id="deadline" name="deadline" value="<%= formatDate(task.deadline) %>">
+                <div class="form-text text-white ">Select the deadline for the task.</div>
+            </div>
+            
+            <div class="mb-5">
+                <label for="assignTo" class="form-label">Assign To</label><span class="form-text assignToError text-warning">  </span>
+                <select class="form-select text-capitalize" id="assignTo" name="assignTo"  >
+                    <option value="" disabled >Select a user</option>
+                     <% user.member.forEach(ele => { %>
+                        <option value="<%=ele._id %>" <%= task.assignTo.equals(ele._id)?'selected':''%>><%= ele.fullname %></option>
+                     <% }) %>
+                </select>
+                <div class="form-text text-white ">Select the user to whom the task will be assigned.</div>
+            </div>
+            
+            <button type="submit" class="btn btn-warning w-100">Submit</button>
+        </form>
+</section>
+
+<script>
+    const form = document.querySelector('#addTask');
+    const taskNameError = document.querySelector('.taskNameError')
+    const descriptionError = document.querySelector('.descriptionError')
+    const deadlineError = document.querySelector('.deadlineError')
+    const assignToError = document.querySelector('.assignToError')
+
+    form.addEventListener('submit',async(e)=>{
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const result = await fetch('/project/<%=projectId%>/tasks/<%=task._id%>',{
+            method : 'PATCH',
+            body : formData
+        })
+        const res = await result.json();
+        if(res.err){
+            taskNameError.textContent = res.err.taskName 
+            descriptionError.textContent = res.err.description
+            deadlineError.textContent = res.err.deadline
+            assignToError.textContent = res.err.assignTo
+        }else{
+            location.assign(`/project/<%=task._id%>/tasks/${res.msg}`)
+        }
+
+    })
+</script>
