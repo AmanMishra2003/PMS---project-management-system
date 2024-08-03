@@ -15,7 +15,7 @@ module.exports.addProjectForm = (req,res)=>{
 
 module.exports.individualProject = asyncHandler(async(req,res)=>{
     const {id} = req.params;
-    const data = await Project.findById(id);
+    const data = await Project.findById(id).populate('task');
     res.render('project/projectpage',{data})
 })
 

@@ -30,21 +30,21 @@
                 <% } %>
                 </div>
             </div>
-            <div class="mb-3 input-group-sm">
+            <div class="mb-5 input-group-sm">
                 <label for="projectDescription" class="form-label small fw-bold">Project Description</label> <span class="ms-3" ><button class="btn btn-sm  btn-primary rounded-pill bg-white border-white text-black py-0" id="preview-btn">Generate Preview</button> </span>
                 <p class="small px-2">To better write the line for spacing and alignment use '< br >' and '< hr >' tags in HTML, you can ensure clarity and readability by properly structuring the HTML.</p>
                 <textarea class="form-control" id="projectDescription" rows="15" placeholder="Enter project description" name="description" ><%=data.description %></textarea>
                 <span class="small text-warning descriptionError "></span>
             </div>
 
-            <div class="mb-3 d-none preview bg-white text-black rounded">
+            <div class="mb-5 d-none preview bg-white text-black rounded">
                 <p class="small ">Description Preview </p> 
                 <div class="description-preview px-2 "></div>
             </div>
             
 
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
         </form>
     </div>
 </section>

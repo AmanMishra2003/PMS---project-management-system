@@ -35,3 +35,15 @@ module.exports.loginValidate = (req,res,next)=>{
     err[path] = message
     res.status(400).json({err})
 }
+
+module.exports.taskValidate = (req,res,next)=>{
+    const {error} = validationSchema.taskValidateSchema.validate(req.body);
+    let err = {}
+    if(!error){
+        return next();
+    }   
+    const path = error.details[0].path[0]
+    const message = error.details[0].message
+    err[path] = message
+    res.status(400).json({err})
+}

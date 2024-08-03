@@ -1,0 +1,93 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+    <section class="individual-task-container container mt-5">
+        <div class="card">
+            <div class="card-header border-bottom py-4 d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <a href="/project/<%= projectId %>/tasks" class=" btn btn-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="white"
+                            class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/></svg>
+                    </a>
+                    <h3 class="m-0 ps-1 text-primary">Task Details</h3>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="card-subtitle m-0"><strong class="text-primary">Assigned By:</strong> </p>
+                    <p class="m-0 text-capitalize ps-1">
+                        <%= taskData.author.fullname %>
+                    </p>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="row align-item-center">
+                    <div class="col-12 col-md-7 py-5 order-1 px-4">
+                        <h5 class="card-title fw-bold mb-4 text-primary">Task Name:
+                            <span class="text-capitalize text-white ">
+                                <%= taskData.taskName %>
+                            </span>
+                        </h5>
+
+                        <div>
+                            <p class="card-text mb-0 text-primary"><strong>Description:</strong> </p>
+                            <p class="taskDescription ps-2 text-capitalize"><%= taskData.description %>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="card-text m-0"><strong class="text-primary">Deadline:</strong> </p>
+                            <p class="taskDeadline ps-2">2024-08-15</p>
+                        </div>
+                        <div>
+                            <p class="card-text m-0"><strong class="text-primary">Assigned To:</strong> </p>
+                            <p class=" text-capitalize ps-2">
+                                <%= taskData.assignTo.fullname %>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-md-5 border-start border-end order-1">
+                        <% if (taskData.image && taskData.image.length!==0) { %>
+                            <div id="carouselExample" class="carousel slide">
+                                <div class="carousel-inner">
+                                    <% taskData.image.forEach((ele,i)=> { %>
+                                        <div class="carousel-item <%= i===0?'active':'' %>">
+                                            <a href="<%= ele.path %>">
+                                                <img src="<%= ele.path %>" class="img-fluid task-image" alt="...">
+                                            </a>
+                                        </div>
+
+                                        <% }) %>
+
+                                </div>
+                                <% if (taskData.image.length>1) { %>
+
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                    <% } %>
+                            </div>
+
+                    </div>
+                    <% } %>
+                </div>
+
+
+
+                <div class="mt-4 d-flex align-items-center justify-content-center justify-content-md-start">
+                    <a href="" class="btn btn-primary mx-2">Edit Task</a>
+                    <form action="/project/<%= projectId %>/tasks/<%= taskData._id%>?_method=DELETE" method="POST">
+                        <button  class="btn btn-danger mx-2">Delete Tasks</button>
+                    </form>
+
+                    <a href="" class="btn btn-warning mx-2">Submit Submission</a>
+                </div>
+            </div>
+        </div>
+    </section>

@@ -1,3 +1,4 @@
+const { now } = require('mongoose')
 const Project = require('../model/projectModel')
 const Joi = require('joi')
 
@@ -52,4 +53,20 @@ module.exports.loginValidationSchema = Joi.object({
         'any.required': `Password is a required field`,
         'string.empty': `Password cannot be empty`
     })
+})
+
+module.exports.taskValidateSchema = Joi.object({
+    taskName : Joi.string().required().messages({
+        'any.required': `Task Name is a required field`,
+        'string.empty': `Task Name cannot be empty`
+    }),
+    description : Joi.string().required().messages({
+        'any.required': `Description is a required field`,
+        'string.empty': `Description cannot be empty`
+    }),
+    deadline : Joi.date().greater('now').required(),
+    assignTo : Joi.string().required().messages({
+        'any.required': `Select a member`,
+        'string.empty': `Select a member`
+    }),
 })

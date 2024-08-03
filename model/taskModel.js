@@ -1,8 +1,10 @@
 const mongoose  = require('mongoose')
 const Schema = mongoose.Schema
 
+const ImageSchema = require('./imageSchema')
+
 const TaskSchema = Schema({
-    TaskName:{
+    taskName:{
         type : String,
         required : [true, "Task's name is required!"],
         lowercase : true,
@@ -35,7 +37,8 @@ const TaskSchema = Schema({
     completed :{
         type : Boolean,
         default : false
-    }
+    },
+    image :[ImageSchema]
 })
 
 module.exports = mongoose.model('Task', TaskSchema)

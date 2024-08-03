@@ -31,8 +31,8 @@ const {checkUser} = require('./middleware/middleware')
 
 //router
 const UserRouter = require('./router/userRouter')
-const ProjectRouter = require('./router/projectRouter')
-const TaskRouter = require('./router/taskRouter')
+const ProjectRouter = require('./router/manager/projectRouter')
+const TaskRouter = require('./router/manager/taskRouter')
 
 //locals
 app.use(checkUser)

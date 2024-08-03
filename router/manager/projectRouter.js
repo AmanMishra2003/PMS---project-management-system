@@ -1,15 +1,15 @@
-const projectController = require('../controller/projectController')
+const projectController = require('../../controller/projectController')
 const express = require('express')
 const router = express.Router()
 
-const {storage} = require('../cloudinary')
+const {storage} = require('../../cloudinary')
 
 //model
-const Project = require('../model/projectModel')
-const {AuthorizeMiddleware,AuthorizeManager} = require('../middleware/middleware')
+const Project = require('../../model/projectModel')
+const {AuthorizeMiddleware,AuthorizeManager} = require('../../middleware/middleware')
 
 //validation middleware
-const {projectValidate} = require('../joi/validate')
+const {projectValidate} = require('../../joi/validate')
 
 //multer middleware 
 const multer = require('multer')
@@ -59,6 +59,7 @@ router.route('/:id/edit')
         AuthorizeManager,
         projectController.editProjectForm
     )
+
 
 module.exports = router;
 

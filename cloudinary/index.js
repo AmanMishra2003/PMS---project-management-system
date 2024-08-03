@@ -13,6 +13,8 @@ const storage = new CloudinaryStorage({
       folder: (req,file)=>{
             if(file.fieldname==='image'){
                 return 'PMS/project'
+            }else if(file.fieldname==='task'){
+                return 'PMS/assignedTasks'
             }
       },
     },

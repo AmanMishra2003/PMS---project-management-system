@@ -1,0 +1,72 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+<section class="taskAdd-section container mt-4">
+        <h2>Assign Task</h2>
+        <form id="addTask">
+            <div class="mb-3">
+                <label for="taskName" class="form-label">Task Name</label> <span class="form-text taskNameError text-warning">  </span>
+                <input type="text" class="form-control" id="taskName" name="taskName" >
+                <div class="form-text text-white ">Enter the name of the task.</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label><span class="form-text descriptionError text-warning">  </span>
+                <textarea class="form-control" id="description" name="description" rows="3" ></textarea>
+                <div class="form-text text-white ">Provide a brief description of the task.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="imageUpload" class="form-label">Upload Image</label>
+                <input class="form-control" type="file" id="imageUpload" name="task" multiple="true" >
+                <div class="form-textt text-white">Upload an image related to the task <span class="fw-bold"> (optional)</span>.</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="deadline" class="form-label">Deadline</label><span class="form-text deadlineError text-warning">  </span>
+                <input type="date" class="form-control" id="deadline" name="deadline" >
+                <div class="form-text text-white ">Select the deadline for the task.</div>
+            </div>
+            
+            <div class="mb-5">
+                <label for="assignTo" class="form-label">Assign To</label><span class="form-text assignToError text-warning">  </span>
+                <select class="form-select text-capitalize" id="assignTo" name="assignTo"  >
+                    <option value="" disabled selected>Select a user</option>
+                     <% user.member.forEach(ele => { %>
+                        <option value="<%= ele._id %>"><%= ele.fullname %></option>
+                     <% }) %>
+                </select>
+                <div class="form-text text-white ">Select the user to whom the task will be assigned.</div>
+            </div>
+            
+            <button type="submit" class="btn btn-warning w-100">Submit</button>
+        </form>
+</section>
+
+<script>
+    const form = document.querySelector('#addTask');
+    const taskNameError = document.querySelector('.taskNameError')
+    const descriptionError = document.querySelector('.descriptionError')
+    const deadlineError = document.querySelector('.deadlineError')
+    const assignToError = document.querySelector('.assignToError')
+
+    form.addEventListener('submit',async(e)=>{
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const result = await fetch('/project/<%=id%>/tasks',{
+            method : 'POST',
+            body : formData
+        })
+        const res = await result.json();
+        if(res.err){
+            taskNameError.textContent = res.err.taskName 
+            descriptionError.textContent = res.err.description
+            deadlineError.textContent = res.err.deadline
+            assignToError.textContent = res.err.assignTo
+        }else{
+            location.assign(`/project/<%=id%>/tasks/${res.msg}`)
+        }
+
+    })
+</script>

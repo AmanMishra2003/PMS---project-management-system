@@ -2,10 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const ImageSchema = {
-    filename : String,
-    path : String
-}
+const ImageSchema = require('./imageSchema')
 
 const ProjectSchema = Schema({
     projectName :{
