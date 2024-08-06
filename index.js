@@ -33,6 +33,7 @@ const {checkUser} = require('./middleware/middleware')
 const UserRouter = require('./router/userRouter')
 const ProjectRouter = require('./router/manager/projectRouter')
 const TaskRouter = require('./router/manager/taskRouter')
+const SubmissionRouter = require('./router/member/submissionRouter')
 
 //locals
 app.use(checkUser)
@@ -48,6 +49,7 @@ app.get('/',(req,res)=>{
 
 app.use('/project',ProjectRouter)
 app.use('/project/:projectId/tasks',TaskRouter)
+app.use('/project/:projectId/tasks/:taskId/submission',SubmissionRouter)
 app.use('/user',UserRouter)
 
 

@@ -1,0 +1,84 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+    <div class="container-md my-4">
+        <h1 class="mb-4">Submissions</h1>
+        <div id="submissions">
+            <!-- Submission Example -->
+            <div class="card mb-4">
+                <div class="row g-0">
+                    <% if (submission.uploadSubmission) { %>
+                        <div class="col-md-4">
+                            <div id="carouselExample" class="carousel slide">
+                                <div class="carousel-inner">
+                                    <% submission.uploadSubmission.forEach((ele,i)=> { %>
+                                        <div class="carousel-item <%= i===0?'active':'' %>">
+                                            <img src="<%= ele.path %>" class="d-block w-100" alt="...">
+                                        </div>
+                                        <% }) %>
+                                </div>
+                                <% if (submission.uploadSubmission.length>1) { %>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExample" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <% } %>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary border-bottom pb-3">Submission Report</h5>
+                                    <p class="card-text mb-3 px-3 py-3">
+                                        <%= submission.report %>
+                                    </p>
+                                    <div class="d-flex align-items-center" style="gap: 10px;">
+                                        <button class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" type="button">Reject</button>
+                                        <form action="/user/submission/<%= submission._id %>/accept?_method=PATCH" method="POST">
+                                            <button class="btn btn-secondary">Accept</button>
+                                        </form>
+                                    </div>
+
+
+                                </div> <!-- Modal -->
+
+
+
+                            </div>
+                </div>
+            </div>
+        </div>
+        <!-- Repeat the above block for each submission -->
+    </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Review</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="mt-2" action="/project/<%= projectId%>/tasks/<%= taskId %>/submission/<%= submission._id %>" method="POST">
+                        <div class="mb-3">
+                            <label for="review" class="form-label">Review Description</label>
+                            <textarea class="form-control" id="review" rows="3"
+                                placeholder="Enter your review here" name="review"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>

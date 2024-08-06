@@ -1,0 +1,28 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+<div class="container my-3">
+    <h1 class="mb-4 border-bottom py-3">Your Submissions</h1>
+    <div class="accordion" id="submissionsAccordion" >
+        <% submission.forEach((ele,i) => { %>
+            <div class="accordion-item bg-secondary text-light mb-3 ">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Submission <%= i+1 %>: <%= ele.task.taskName %>
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#submissionsAccordion">
+                    <div class="accordion-body bg-dark text-light">
+                        <ul class="list-group">
+                            <% ele.review.forEach((review,i) => { %>
+                                <li class="list-group-item bg-secondary text-light">Review <%= i+1 %>: <%= review %></li>
+                            <% }) %>
+                        </ul>
+                        <div class="mt-3">
+                            <a class="btn btn-warning btn-sm" href="/project/<%= ele.task.project._id %>/tasks/<%= ele.task._id  %>/submission/<%= ele._id %>/redo">Re-Submit Task</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>

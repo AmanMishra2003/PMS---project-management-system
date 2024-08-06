@@ -1,0 +1,78 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+    <div class=" mt-3 py-3">
+        <h2 class="text-center mb-4">Submissions</h2>
+        <div class="row row-cols-1 g-2">
+            <div class="col d-none d-lg-block">
+                <div class="card bg-light text-dark">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-1 fw-bold">#</div>
+                            <div class="col-7 fw-bold">Task Name</div>
+                            <div class="col-2 fw-bold px-0">Submitted By</div>
+                            <div class="col-2 fw-bold px-0">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% for (let submission in submissionInDateOrder){ %>
+                <div class=" col-11 col-lg-2 bg-light text-dark px-3 mx-2 py-2 mb-0 border-dark rounded">
+                    <%= formatDate(submission) %>
+                </div>
+                <% submissionInDateOrder[submission].forEach((ele,i)=> { %>
+                    <div class="col justify-content-center">
+                        <div class="card bg-dark text-light">
+                            <div class="card-body">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class=" col-1 col-md-2  col-lg-1">
+                                        <%= i+1 %>
+                                    </div>
+                                    <div
+                                        class=" col-11 col-md-8 col-lg-7 d-flex align-items-center justify-content-center justify-content-sm-start text-capitalize mb-2 mb-lg-0">
+                                        <%= ele.task.taskName %><a class="text-decoration-none"
+                                                href="/project/<%= ele.task.project._id %>">[Project -
+                                                <%=ele.task.project.projectName %>]</span>
+                                                    <a href="/project/<%= ele.task.project._id %>/tasks/<%=ele.task._id %>"
+                                                        class="ms-2 mb-1 btn btn-dark">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem"
+                                                            height="1rem" fill="white" class="bi bi-box-arrow-up-right"
+                                                            viewBox="0 0 16 16">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5" />
+                                                            <path fill-rule="evenodd"
+                                                                d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z" />
+                                                        </svg>
+                                                    </a>
+                                    </div>
+                                    <div
+                                        class=" col-12 col-md-6 col-lg-2 px-0 text-center text-lg-start text-capitalize mb-2 mb-lg-0">
+                                        <span class="text-white fw-bold d-block-inline d-lg-none m-0">Assign To: </span>
+                                        <%= ele.task.assignTo.fullname %>
+                                    </div>
+                                    <div class=" col-12 col-md-6 col-lg-2 text-center text-lg-start px-0">
+                                        <span class="text-white fw-bold d-block-inline d-lg-none m-0">Completed:</span>
+                                        <% if (currentUser.role==='manager' ) { %>
+                                            <% if (ele.reEvaluation) { %>
+                                                <span class="text-secondary">Send For Re-Do...</span>
+                                            <% } else { %>
+                                                <a class="btn btn-sm btn-light" href="/project/<%= ele.task.project._id %>/tasks/<%= ele.task._id %>/submission/<%= ele._id %>">CheckSubmission</a>
+                                            <% } %>
+                                        <% }else{ %>
+                                            <% if (!ele.accepted) { %>
+                                                <span>🔴Pending</span>
+                                            <% } else { %>
+                                                    <span>🟢Completed</span>
+                                            <% } %>
+                                        <% } %>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+
+            <% } %>
+        </div>
+    </div>

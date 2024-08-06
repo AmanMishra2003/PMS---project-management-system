@@ -144,21 +144,21 @@ input, textarea, input::selection{
 }
 
 .project-link{
-    width: 150px !important;
+    min-width: 150px !important;
     display: inline-block;
     aspect-ratio: 1/1;
     position: relative !important;
 }
 
 .project-image{
-    width: 150px !important;
+    min-width: 150px !important;
     position: absolute !important;
     transition: transform 200ms;
     z-index: 4;
 }
 
 .project-image-white{
-    width:110px !important;
+    min-width:110px !important;
     height: 70px !important;
     position: absolute !important;
     top: 30px;

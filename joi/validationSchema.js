@@ -71,3 +71,15 @@ module.exports.taskValidateSchema = Joi.object({
     }),
     deleteImages : Joi.array()
 })
+
+module.exports.submissionValidateSchema = Joi.object({
+    uploadSubmission : Joi.object(),
+    // uploadSubmission : Joi.object().required().messages({
+    //     'any.required': `Upload is a required field`,
+    //     'string.empty': `Task Name cannot be empty`
+    // }),
+    report : Joi.string().required().messages({
+        'any.required': `Report is a required field`,
+        'string.empty': `Report cannot be empty`
+    })
+})

@@ -2,7 +2,6 @@
 const jwt = require('jsonwebtoken');
 
 //model
-const Project = require('../model/projectModel')
 const User = require('../model/userModel')
 
 module.exports.checkUser = (req,res,next)=>{
@@ -10,7 +9,7 @@ module.exports.checkUser = (req,res,next)=>{
 
     if(!token){
         res.locals.currentUser = null;
-        return next();
+        // return next();
     }
 
     jwt.verify(token, process.env.JWTSECRET,async(err,decoded)=>{
@@ -29,8 +28,6 @@ module.exports.checkUser = (req,res,next)=>{
             }
         }
     })
-
-
 }
 
 
@@ -40,11 +37,10 @@ module.exports.AuthorizeMiddleware = (req,res,next)=>{
        return res.redirect('/user/login')
     }
 
-    jwt.verify(token, process.env.JWTSECRET,(err,decoded)=>{
+    jwt.verify(token, process.env.JWTSECRET,(err)=>{
         if(err){
             console.log(err)
         }else{
-            // console.log(decoded)
             next()
         }
     })

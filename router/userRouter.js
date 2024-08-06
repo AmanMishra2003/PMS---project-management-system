@@ -22,12 +22,37 @@ router.route('/member/signup')
     .get(AuthorizeMiddleware,AuthorizeManager,userController.memberSignUpForm)
     .post(AuthorizeMiddleware,AuthorizeManager,signupValidate, userController.memberSignUp)
 
+
+//add member router
 router.route('/member')
     .get(AuthorizeMiddleware,AuthorizeManager,userController.teamMember)
 
 router.route('/member/:memberId')
     .delete(AuthorizeMiddleware,AuthorizeManager,userController.removeTeamMember)
 
+//user task route both depending on the user is member of manager
+router.route('/tasks')
+    .get(userController.assignedTask)
+
+
+//submission route
+router.route('/allsubmission')
+    .get(
+        userController.allSubmission
+    )
+
+router.route('/submission/reviews')
+    .get(
+        userController.submissionReview
+    )
+
+//submission accept route
+router.route('/submission/:id/accept')
+    .patch(
+        userController.submissionAccept
+    )
+
+//logout route
 router.route('/logout')
     .get(userController.logout)
 

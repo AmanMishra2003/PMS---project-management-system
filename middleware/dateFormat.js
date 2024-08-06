@@ -1,5 +1,7 @@
 const date = require('date-and-time')
 
+
 module.exports.formatDate = (d)=>{
-    return date.format(d, 'YYYY-MM-DD')
+    const dateToBeformated = new Date(d)
+    return date.format(dateToBeformated, 'YYYY-MM-DD')
 }

@@ -20,7 +20,7 @@ module.exports.assignTaskPage = asyncHandler(async(req,res)=>{
     const {projectId} = req.params;
     //fetching user and populating to get TeamMembers
     const user = await User.findById(res.locals.currentUser._id).populate('member')
-    res.render('task/add.ejs',{user,id : projectId});
+    res.render('task/add',{user,id : projectId});
 })
 
 module.exports.addTaskToDatabase = async(req,res)=>{
@@ -64,20 +64,20 @@ module.exports.addTaskToDatabase = async(req,res)=>{
 module.exports.singleTaskPage = async(req,res)=>{
     const {projectId,id} = req.params;
     const taskData = await Task.findById(id).populate('assignTo').populate('author');
-    res.render('task/show.ejs',{taskData,projectId})
+    res.render('task/show',{taskData,projectId})
 }
 
 module.exports.editTaskForm = asyncHandler(async(req,res)=>{
     const {projectId, id} = req.params;
     const task = await Task.findById(id)
     const user = await User.findById(res.locals.currentUser._id).populate('member')
-    res.render('task/edit.ejs',{projectId, task, user,formatDate})
+    res.render('task/edit',{projectId, task, user,formatDate})
 })
 
 module.exports.editTask = async(req,res)=>{
     try{
         const {projectId, id} = req.params;
-        const personTaskAssignTo = await User.findById(res.locals.currentUser._id)
+        const personTaskAssignTo = await User.findById(req.body.assignTo)
         const updatedTask = await Task.findByIdAndUpdate(id, req.body,{runValidation:true})
 
         //deleteing image from cloud and inserting new ones

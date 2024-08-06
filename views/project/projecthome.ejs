@@ -1,5 +1,5 @@
 <%- layout('./layout/boilerplate.ejs') %>
-<section class="container">
+<section class="container-md">
     <div class="w-100 d-flex justify-content-between align-items-center px-2 py-3">
         <p class="h4 text-capitalize roboto project-title">Project</p>
         <a href="/project/new" class="btn btn-sm btn-primary" style="max-height: fit-content;"> Add New Project</a>
@@ -10,8 +10,8 @@
             <% data.forEach(ele => { %>
                 <div class="col-12 col-sm-4 col-lg-3 d-flex flex-sm-column align-items-center justify-content-sm-center" >
                     <a href="/project/<%= ele.id %>" class="project-link"><img src="/images/foldericon.png" alt="" class="img-fluid project-image" > <img src="/images/white.jpeg"  alt="" class="img-fluid project-image-white"></a>
-                    <div class="project-details">
-                        <p class="fw-bold text-center m-0 text-capitalize"><%= ele.projectName %></p>
+                    <div class="project-details w-100">
+                        <p class="text-center m-0 text-capitalize"><%= ele.projectName %></p>
                     </div>
                 </div>
             <% }) %>     

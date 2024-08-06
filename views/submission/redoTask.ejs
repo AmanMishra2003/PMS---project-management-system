@@ -1,0 +1,51 @@
+<%- layout('./layout/boilerplate.ejs') %>
+
+    <div class="container mt-3 px-0 px-md-5 py-5">
+        <div class="card-header text-white mb-4">
+            <h4>Submission Form</h4>
+        </div>
+        <div class="">
+            <form  id="redoTask">
+                <div class="mb-3">
+                    <label for="uploadSubmission" class="form-label small">Upload Submission</label><span class="form-text uploadSubmissionError text-warning">  </span>
+                    <input class="form-control form-control-sm" type="file" id="uploadSubmission"
+                        name="submission" multiple>
+                </div>
+                <div class="mb-5">
+                    <label for="report" class="form-label small">Report</label><span class="form-text reportError text-warning">  </span>
+                    <textarea class="form-control form-control-sm" id="report" name="report" rows="3"></textarea>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-warning">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector('#redoTask');
+        const uploadSubmissionError = document.querySelector('.uploadSubmissionError')
+        const reportError = document.querySelector('.reportError')
+
+        form.addEventListener('submit',async(e)=>{
+            e.preventDefault()
+            const formData= new FormData(e.target);
+
+            const result = await fetch('/project/<%= projectId%>/tasks/<%= taskId%>/submission/<%=id%>',
+                {
+                    method: 'PATCH',
+                    body: formData
+                }
+            )
+            const res = await result.json();
+            console.log(res)
+            if(res.err){
+                uploadSubmissionError.textContent = res.err.uploadSubmission
+                reportError.textContent = res.err.report
+            }else{
+                location.assign('/user/allsubmission')
+            }
+        })
+        
+    </script>

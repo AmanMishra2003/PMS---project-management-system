@@ -19,7 +19,6 @@
                 </div>
             </div>
             <div class="card-body">
-
                 <div class="row align-item-center">
                     <div class="col-12 col-xl-7 py-5 order-1 px-4">
                         <h5 class="card-title fw-bold mb-4 text-primary">Task Name:
@@ -45,8 +44,8 @@
                         </div>
 
                     </div>
+                    <% if (taskData.image && taskData.image.length!==0) { %>
                     <div class="col-12 col-xl-5 border-start border-end order-1">
-                        <% if (taskData.image && taskData.image.length!==0) { %>
                             <div id="carouselExample" class="carousel slide">
                                 <div class="carousel-inner">
                                     <% taskData.image.forEach((ele,i)=> { %>
@@ -81,12 +80,15 @@
 
 
                 <div class="mt-4 d-flex align-items-center justify-content-center justify-content-md-start">
+                    <% if (currentUser && currentUser.role==='manager') { %>
                     <a href="/project/<%= projectId %>/tasks/<%= taskData._id%>/edit" class="btn btn-primary mx-2">Edit Task</a>
                     <form action="/project/<%= projectId %>/tasks/<%= taskData._id%>?_method=DELETE" method="POST">
                         <button  class="btn btn-danger mx-2">Delete Tasks</button>
                     </form>
-
-                    <a href="" class="btn btn-warning mx-2">Submit Submission</a>
+                    <% } %>
+                    <% if (!taskData.completed && currentUser.role==='teammember') { %>
+                        <a href="/project/<%= projectId %>/tasks/<%= taskData._id  %>/submission" class="btn btn-warning mx-2">Submit Submission</a>
+                    <% } %>
                 </div>
             </div>
         </div>

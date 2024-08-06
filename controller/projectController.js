@@ -1,4 +1,7 @@
+//model
 const Project = require('../model/projectModel')
+const User = require('../model/userModel')
+
 const asyncHandler = require('express-async-handler')
 const {handleError} = require('../middleware/handleError')
 const {cloudinary} = require('../cloudinary')
@@ -28,6 +31,7 @@ module.exports.addProjectToDatabase = async(req,res)=>{
             }
         ))
         const data = new Project(req.body);
+        const user =await User.findById(res.locals.currentUser._id)
         data.author = res.locals.currentUser;
         data.image = [...file]
         await data.save();
@@ -46,7 +50,6 @@ module.exports.editProjectForm = asyncHandler(async(req,res)=>{
 
 module.exports.editProjectToDatabase = async(req,res)=>{
     try{
-        console.log(req.body)
         const {id} = req.params;
         const data = await Project.findByIdAndUpdate(id, req.body , {runValidation : true})
 
