@@ -32,7 +32,6 @@ form.addEventListener('submit', async (e) => {
             body: formData
         })
         const result = await res.json();
-        console.log(result)
         if (result.err) {
             projectNameError.textContent = result.err.projectName
             imageError.textContent = result.err.image
@@ -43,6 +42,6 @@ form.addEventListener('submit', async (e) => {
         }
 
     } catch (err) {
-        console.log()
+        console.log(err)
     }
 })

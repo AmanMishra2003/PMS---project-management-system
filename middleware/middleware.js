@@ -84,8 +84,8 @@ module.exports.taskAuthorCheck = asyncHandler(async(req,res,next)=>{
 
 module.exports.submissionUserAuthorization = asyncHandler(async(req,res,next)=>{
     const {taskId} = req.params;
-    const task = await Submission.findById(taskId);
-    if(task.assign.equals(res.locals.currentUser._id)){
+    const task = await Task.findById(taskId);
+    if(task.assignTo.equals(res.locals.currentUser._id)){
         return next()
     }
     res.redirect('/project')

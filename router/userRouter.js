@@ -4,7 +4,7 @@ const router = express.Router()
 
 //validate
 const {signupValidate,loginValidate} = require('../joi/validate')
-const {AuthorizeMiddleware,AuthorizeManager} = require('../middleware/middleware')
+const {AuthorizeMiddleware,AuthorizeManager, AuthorizeMember} = require('../middleware/middleware')
 
 
 //models
@@ -32,23 +32,30 @@ router.route('/member/:memberId')
 
 //user task route both depending on the user is member of manager
 router.route('/tasks')
-    .get(userController.assignedTask)
+    .get(
+        AuthorizeMiddleware,
+        userController.assignedTask
+    )
 
 
 //submission route
 router.route('/allsubmission')
     .get(
+        AuthorizeMiddleware,
         userController.allSubmission
     )
 
 router.route('/submission/reviews')
     .get(
+        AuthorizeMiddleware,
+        AuthorizeManager,
         userController.submissionReview
     )
 
 //submission accept route
 router.route('/submission/:id/accept')
     .patch(
+        AuthorizeMiddleware,
         userController.submissionAccept
     )
 

@@ -36,7 +36,7 @@
                 body: formData
             })
             const result =  await res.json();
-            console.log(result)
+
             if(result.err){
                 projectNameError.textContent = result.err.projectName
                 imageError.textContent = result.err.image
@@ -47,6 +47,6 @@
             }
 
         }catch(err){
-            console.log()
+            console.log(err)
         }
     })

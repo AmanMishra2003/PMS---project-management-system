@@ -20,7 +20,7 @@
             </div>
             <div class="card-body">
                 <div class="row align-item-center">
-                    <div class="col-12 col-xl-7 py-2 order-1 px-4">
+                    <div class="col-12 <%= taskData.image.length===0 ? '':'col-xl-7 ' %> py-2 order-1 px-4">
                         <div class="small text-secondary mb-1"> Date Added :- <%= formatDate(taskData.dateAdded)  %></div>
                         <h5 class="card-title fw-bold mb-4 text-primary">Task Name:
                             <span class="text-capitalize text-white ">
@@ -46,7 +46,7 @@
 
                     </div>
                     <% if (taskData.image && taskData.image.length!==0) { %>
-                    <div class="col-12 col-xl-5 border-start border-end order-1">
+                    <div class="col-12 col-xl-5 border-start border-end order-1 ">
                             <div id="carouselExample" class="carousel slide">
                                 <div class="carousel-inner">
                                     <% taskData.image.forEach((ele,i)=> { %>

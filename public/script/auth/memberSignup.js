@@ -1,5 +1,4 @@
-
-const form = document.querySelector('#managerSignup')
+const form = document.querySelector('#memberSignup')
 const usernameError = document.querySelector('#usernameError')
 const emailError = document.querySelector('#emailError')
 const firstnameError = document.querySelector('#firstnameError')
@@ -21,14 +20,10 @@ form.addEventListener('submit', async (e) => {
     const firstname = form.firstname.value;
     const lastname = form.lastname.value;
     const password = form.password.value;
-    console.log(username)
-    console.log(email)
-    console.log(firstname)
-    console.log(lastname)
-    console.log(password)
+
 
     try {
-        const result = await fetch('/user/signup',
+        const result = await fetch(`/user/member/signup`,
             {
                 method: 'POST',
                 body: JSON.stringify({
@@ -41,7 +36,6 @@ form.addEventListener('submit', async (e) => {
             }
         )
         const res = await result.json()
-        console.log(res)
         if (res.err) {
             usernameError.textContent = res.err.username;
             emailError.textContent = res.err.email;

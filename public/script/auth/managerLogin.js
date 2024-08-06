@@ -19,7 +19,6 @@ try {
             }
         })
         const res = await result.json();
-        console.log(res)
         if(res.err){
             emailError.textContent = res.err.email
             passwordError.textContent = res.err.password

@@ -4,11 +4,13 @@ const { handleError } = require('../middleware/handleError')
 const asyncHandler = require('express-async-handler')
 const { populate } = require('dotenv')
 const { formatDate } = require('../middleware/dateFormat')
+const transporter = require('../mail')
 
 //models
 const User = require('../model/userModel')
 const Task = require('../model/taskModel')
 const Submission = require('../model/submissionModel')
+
 
 const maxAge = 24 * 60 * 60
 
@@ -70,7 +72,19 @@ module.exports.memberSignUp = async (req, res) => {
         user.manager = manager
         manager.member.push(user)
         await manager.save()
-        await user.save();
+        await user.save();  
+
+        const info = await transporter.sendMail({
+            from: manager.email, // sender address
+            to: user.email, // list of receivers
+            subject: "Hello ✔", // Subject line
+            text: "Hello world?", // plain text body
+            html: "<b>Hello world?</b>", // html body
+          });
+        
+        console.log("Message sent: %s", info.messageId);
+
+
         res.status(200).json({ user: user._id })
     } catch (error) {
         const err = handleError(error)
