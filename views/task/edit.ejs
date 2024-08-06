@@ -12,7 +12,14 @@
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label><span class="form-text descriptionError text-warning">  </span>
                 <textarea class="form-control" id="description" name="description" rows="3" ><%= task.description %></textarea>
-                <div class="form-text text-white ">Provide a brief description of the task.</div>
+                <div class="form-text text-white ">Provide a brief description of the task.<button
+                    class="btn btn-sm  btn-primary rounded-pill bg-white border-white text-black py-0"
+                    id="preview-btn">Generate Preview</button> </div>
+
+                <div class="my-2 d-none preview bg-white text-black rounded">
+                    <p class="small ">Description Preview </p>
+                    <div class="task-description-preview px-2 "></div>
+                </div>
             </div>
 
             <div class="mb-3">
@@ -64,6 +71,19 @@
     const descriptionError = document.querySelector('.descriptionError')
     const deadlineError = document.querySelector('.deadlineError')
     const assignToError = document.querySelector('.assignToError')
+
+        //preview
+const previewContainer = document.querySelector('.preview')
+const previewBtn = document.querySelector('#preview-btn')
+const preview = document.querySelector('.task-description-preview')
+
+    previewBtn.addEventListener('click', (e) => {
+    if (form.description.value) {
+        e.preventDefault();
+        preview.innerHTML = form.description.value
+        previewContainer.classList.remove('d-none')
+    }
+    })
 
     form.addEventListener('submit',async(e)=>{
         e.preventDefault();

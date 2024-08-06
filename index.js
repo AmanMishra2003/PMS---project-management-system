@@ -27,7 +27,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 app.use(cookieParser())
-const {checkUser} = require('./middleware/middleware')
+const {checkUser, AuthorizeMiddleware} = require('./middleware/middleware')
 
 //router
 const UserRouter = require('./router/userRouter')
@@ -47,9 +47,9 @@ app.get('/',(req,res)=>{
     res.render('homePage')
 })
 
-app.use('/project',ProjectRouter)
-app.use('/project/:projectId/tasks',TaskRouter)
-app.use('/project/:projectId/tasks/:taskId/submission',SubmissionRouter)
+app.use('/project',AuthorizeMiddleware,ProjectRouter)
+app.use('/project/:projectId/tasks',AuthorizeMiddleware,TaskRouter)
+app.use('/project/:projectId/tasks/:taskId/submission',AuthorizeMiddleware,SubmissionRouter)
 app.use('/user',UserRouter)
 
 

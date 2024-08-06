@@ -5,9 +5,7 @@ const Schema = mongoose.Schema
 const ImageSchema = require('./imageSchema')
 
 const submissionSchema = Schema({
-    uploadSubmission : [
-        ImageSchema
-    ],
+    uploadSubmission : ImageSchema,
     report :{
         type : String,
         required : true,

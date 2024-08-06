@@ -6,7 +6,7 @@ const {storage} = require('../../cloudinary')
 
 //model
 const Project = require('../../model/projectModel')
-const {AuthorizeMiddleware,AuthorizeManager} = require('../../middleware/middleware')
+const {AuthorizeManager, projectAuthorCheck} = require('../../middleware/middleware')
 
 //validation middleware
 const {projectValidate} = require('../../joi/validate')
@@ -17,11 +17,9 @@ const upload = multer({storage : storage})
 
 router.route('/')
     .get( 
-        AuthorizeMiddleware, 
         projectController.projectPage
     )
     .post(
-        AuthorizeMiddleware,
         AuthorizeManager,
         upload.array('image'), 
         projectValidate, 
@@ -30,33 +28,31 @@ router.route('/')
 
 router.route('/new')
     .get(
-        AuthorizeMiddleware,
         AuthorizeManager,
         projectController.addProjectForm
     )
 
 router.route('/:id')
     .get(
-        AuthorizeMiddleware,
         projectController.individualProject
     )
     .patch( 
-        AuthorizeMiddleware,
         AuthorizeManager,
+        projectAuthorCheck,
         upload.array('image'),
         projectValidate,
         projectController.editProjectToDatabase
     )
     .delete(
-        AuthorizeMiddleware,
         AuthorizeManager,
+        projectAuthorCheck,
         projectController.deleteProject
     )
 
 router.route('/:id/edit')
     .get(
-        AuthorizeMiddleware,
         AuthorizeManager,
+        projectAuthorCheck,
         projectController.editProjectForm
     )
 

@@ -4,19 +4,16 @@ const router = express.Router({mergeParams:true})
 
 const {storage} = require('../../cloudinary')
 const {taskValidate} = require('../../joi/validate')
+const {taskAuthorCheck,AuthorizeManager} = require('../../middleware/middleware')
 
 //multer middleware 
 const multer = require('multer')
 const upload = multer({storage : storage})
 
-//model
-const Task = require('../../model/taskModel');
 
 router.route('/')
-    .get(
-        taskController.tasks
-    )   
     .post(
+        AuthorizeManager,
         upload.array('task'),
         taskValidate,
         taskController.addTaskToDatabase
@@ -24,6 +21,7 @@ router.route('/')
 
 router.route('/assign')
     .get(
+        AuthorizeManager,
         taskController.assignTaskPage
     )   
 
@@ -32,16 +30,22 @@ router.route('/:id')
         taskController.singleTaskPage
     )
     .patch(
+        AuthorizeManager,
+        taskAuthorCheck,
         upload.array('task'),
         taskValidate,
         taskController.editTask
     )
     .delete(
+        AuthorizeManager,
+        taskAuthorCheck,
         taskController.deleteTask
     )
 
 router.route('/:id/edit')
     .get(
+        AuthorizeManager,
+        taskAuthorCheck,
         taskController.editTaskForm
     )
 

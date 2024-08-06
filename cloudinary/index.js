@@ -15,17 +15,28 @@ const storage = new CloudinaryStorage({
                 return 'PMS/project'
             }else if(file.fieldname==='task'){
                 return 'PMS/assignedTasks'
-            }else if(file.fieldname==='submission'){
+            }
+      },
+    },
+    allowedFormat : ['png','jpeg','jpg','pdf']
+  });
+
+const storageRawFiles = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: (req,file)=>{
+            if(file.fieldname==='submission'){
                 return 'PMS/submission'
             }
       },
       resource_type: 'raw', 
     },
-    allowedFormat : ['png','jpeg','jpg','pdf']
+    allowedFormat : ['pdf']
   });
 
 
   module.exports = {
     cloudinary,
+    storageRawFiles,
     storage
   }

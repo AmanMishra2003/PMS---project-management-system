@@ -17,12 +17,15 @@
                                 <li class="list-group-item bg-secondary text-light">Review <%= i+1 %>: <%= review %></li>
                             <% }) %>
                         </ul>
-                        <div class="mt-3">
-                            <a class="btn btn-warning btn-sm" href="/project/<%= ele.task.project._id %>/tasks/<%= ele.task._id  %>/submission/<%= ele._id %>/redo">Re-Submit Task</a>
-                        </div>
+                        <% if (ele.review.length>0 && ele.reEvaluation) { %>
+                            <div class="mt-3">
+                                <a class="btn btn-warning btn-sm" href="/project/<%= ele.task.project._id %>/tasks/<%= ele.task._id  %>/submission/<%= ele._id %>/redo">Re-Submit Task</a>
+                            </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
+
         <% }) %>
     </div>
 </div>

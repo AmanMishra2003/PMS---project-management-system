@@ -18,6 +18,7 @@
                 </div>
             </div>
             <% for (let submission in submissionInDateOrder){ %>
+                <div class="mb-3">
                 <div class=" col-11 col-lg-2 bg-light text-dark px-3 mx-2 py-2 mb-0 border-dark rounded">
                     <%= formatDate(submission) %>
                 </div>
@@ -54,16 +55,20 @@
                                     <div class=" col-12 col-md-6 col-lg-2 text-center text-lg-start px-0">
                                         <span class="text-white fw-bold d-block-inline d-lg-none m-0">Completed:</span>
                                         <% if (currentUser.role==='manager' ) { %>
-                                            <% if (ele.reEvaluation) { %>
-                                                <span class="text-secondary">Send For Re-Do...</span>
+                                            <% if (!ele.accepted) { %>
+                                                <% if (ele.reEvaluation) { %>
+                                                    <span class="text-secondary">Send For Re-Do...</span>
+                                                <% } else { %>
+                                                    <a class="btn btn-sm btn-light" href="/project/<%= ele.task.project._id %>/tasks/<%= ele.task._id %>/submission/<%= ele._id %>">CheckSubmission</a>
+                                                <% } %>
                                             <% } else { %>
-                                                <a class="btn btn-sm btn-light" href="/project/<%= ele.task.project._id %>/tasks/<%= ele.task._id %>/submission/<%= ele._id %>">CheckSubmission</a>
+                                                <span>🟢 Accepted</span>
                                             <% } %>
                                         <% }else{ %>
                                             <% if (!ele.accepted) { %>
-                                                <span>🔴Pending</span>
+                                                <span>🔴 Under Review</span>
                                             <% } else { %>
-                                                    <span>🟢Completed</span>
+                                                    <span>🟢 Completed</span>
                                             <% } %>
                                         <% } %>
                                         </div>
@@ -71,8 +76,9 @@
                             </div>
                         </div>
                     </div>
-                    <% }) %>
 
+                    <% }) %>
+                </div>
             <% } %>
         </div>
     </div>

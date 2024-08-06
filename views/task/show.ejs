@@ -20,7 +20,8 @@
             </div>
             <div class="card-body">
                 <div class="row align-item-center">
-                    <div class="col-12 col-xl-7 py-5 order-1 px-4">
+                    <div class="col-12 col-xl-7 py-2 order-1 px-4">
+                        <div class="small text-secondary mb-1"> Date Added :- <%= formatDate(taskData.dateAdded)  %></div>
                         <h5 class="card-title fw-bold mb-4 text-primary">Task Name:
                             <span class="text-capitalize text-white ">
                                 <%= taskData.taskName %>
@@ -29,7 +30,7 @@
 
                         <div>
                             <p class="card-text mb-0 text-primary"><strong>Description:</strong> </p>
-                            <p class="taskDescription ps-2 text-capitalize"><%= taskData.description %>
+                            <p class="taskDescription ps-2 text-capitalize description"><%=// taskData.description %>
                             </p>
                         </div>
                         <div>
@@ -59,7 +60,6 @@
 
                                 </div>
                                 <% if (taskData.image.length>1) { %>
-
                                     <button class="carousel-control-prev" type="button"
                                         data-bs-target="#carouselExample" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -81,15 +81,21 @@
 
                 <div class="mt-4 d-flex align-items-center justify-content-center justify-content-md-start">
                     <% if (currentUser && currentUser.role==='manager') { %>
-                    <a href="/project/<%= projectId %>/tasks/<%= taskData._id%>/edit" class="btn btn-primary mx-2">Edit Task</a>
+                        <% if (!taskData.completed) { %>
+                            <a href="/project/<%= projectId %>/tasks/<%= taskData._id%>/edit" class="btn btn-primary mx-2">Edit Task</a>
+                        <% } %>
                     <form action="/project/<%= projectId %>/tasks/<%= taskData._id%>?_method=DELETE" method="POST">
                         <button  class="btn btn-danger mx-2">Delete Tasks</button>
                     </form>
                     <% } %>
-                    <% if (!taskData.completed && currentUser.role==='teammember') { %>
+                    <% if (!taskData.completed && currentUser.role==='teammember' && taskData.assignTo.equals(currentUser._id))  { %>
                         <a href="/project/<%= projectId %>/tasks/<%= taskData._id  %>/submission" class="btn btn-warning mx-2">Submit Submission</a>
                     <% } %>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        document.querySelector('.description').innerHTML=<%- JSON.stringify(taskData.description)%>
+    </script>

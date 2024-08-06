@@ -2,7 +2,9 @@
 <section class="container-md">
     <div class="w-100 d-flex justify-content-between align-items-center px-2 py-3">
         <p class="h4 text-capitalize roboto project-title">Project</p>
-        <a href="/project/new" class="btn btn-sm btn-primary" style="max-height: fit-content;"> Add New Project</a>
+        <% if (currentUser.role==='manager') { %>
+            <a href="/project/new" class="btn btn-sm btn-primary" style="max-height: fit-content;"> Add New Project</a>
+        <% } %>
     </div>
     
     <div class="project-container">

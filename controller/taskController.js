@@ -11,10 +11,6 @@ const {formatDate} = require('../middleware/dateFormat')
 
 
 
-module.exports.tasks = (req,res)=>{
-    // res.render('task/tasks.ejs')
-    res.send('task apge')
-}
 
 module.exports.assignTaskPage = asyncHandler(async(req,res)=>{
     const {projectId} = req.params;
@@ -64,7 +60,7 @@ module.exports.addTaskToDatabase = async(req,res)=>{
 module.exports.singleTaskPage = async(req,res)=>{
     const {projectId,id} = req.params;
     const taskData = await Task.findById(id).populate('assignTo').populate('author');
-    res.render('task/show',{taskData,projectId})
+    res.render('task/show',{taskData,projectId, formatDate})
 }
 
 module.exports.editTaskForm = asyncHandler(async(req,res)=>{
@@ -79,7 +75,7 @@ module.exports.editTask = async(req,res)=>{
         const {projectId, id} = req.params;
         const personTaskAssignTo = await User.findById(req.body.assignTo)
         const updatedTask = await Task.findByIdAndUpdate(id, req.body,{runValidation:true})
-
+        
         //deleteing image from cloud and inserting new ones
         if(req.body.deleteImages){
             req.body.deleteImages.forEach(async(ele)=>{
@@ -96,8 +92,8 @@ module.exports.editTask = async(req,res)=>{
             })
         }
         updatedTask.assignTo = personTaskAssignTo
+        updatedTask.completed = false
         await updatedTask.save()
-        
         res.status(200).json({msg:updatedTask.id})
     }catch(error){
         const err = handleError(error)

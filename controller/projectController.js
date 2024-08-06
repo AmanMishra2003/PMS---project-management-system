@@ -8,7 +8,13 @@ const {cloudinary} = require('../cloudinary')
 
 
 module.exports.projectPage = asyncHandler(async(req,res)=>{
-        const data = await Project.find({author: res.locals.currentUser});
+    let data;
+    const role = res.locals.currentUser.role
+    if(role==='manager'){
+        data = await Project.find({author: res.locals.currentUser});
+    }else{
+        data = await Project.find({author: res.locals.currentUser.manager});
+    }
         res.render('project/projecthome',{data})
 })
 
