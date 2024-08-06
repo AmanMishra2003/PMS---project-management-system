@@ -50,7 +50,16 @@
           </div>
         </div>
         <div class="col-12 col-xl-4 border-light rounded ps-4 mt-3 ps-xl-3 sticky-lg-top bg-light" style="max-height: 700px; z-index: 10; top: 5%; ">
-          <p class="h4 py-4 text-dark border-bottom border-dark"> Project Progress : </p>
+          <div class="top-container border-bottom border-dark mb-3">
+            <p class="h4 py-3 text-dark "> Project Progress : </p>
+            <% if (data.task.length!==0) { %>
+              <div class="progress-bar mb-4">
+                <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: <%= progressBarValue%>%"></div>
+                </div>
+              </div>
+            <% } %>
+          </div>
           <% if (data.task.length!==0) { %>
             <div class="container">
               <div class="allTask">

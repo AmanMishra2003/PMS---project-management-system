@@ -25,7 +25,8 @@ module.exports.addProjectForm = (req,res)=>{
 module.exports.individualProject = asyncHandler(async(req,res)=>{
     const {id} = req.params;
     const data = await Project.findById(id).populate('task');
-    res.render('project/projectpage',{data})
+    const progressBarValue = ((data.task.filter(ele=>ele.completed).length)/data.task.length)*100
+    res.render('project/projectpage',{data, progressBarValue})
 })
 
 module.exports.addProjectToDatabase = async(req,res)=>{
