@@ -7,8 +7,6 @@ const {signupValidate,loginValidate} = require('../joi/validate')
 const {AuthorizeMiddleware,AuthorizeManager, AuthorizeMember} = require('../middleware/middleware')
 
 
-//models
-const User = require('../model/userModel')
 
 router.route('/login')
     .get(userController.loginform)
@@ -48,7 +46,7 @@ router.route('/allsubmission')
 router.route('/submission/reviews')
     .get(
         AuthorizeMiddleware,
-        AuthorizeManager,
+        AuthorizeMember,
         userController.submissionReview
     )
 

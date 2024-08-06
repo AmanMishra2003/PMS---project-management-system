@@ -8,7 +8,9 @@ const previewContainer = document.querySelector('.preview')
 const previewBtn = document.querySelector('#preview-btn')
 const preview = document.querySelector('.description-preview')
 
-
+//buttons
+const submitBtn = document.querySelector("button[type='submit']")
+const loadingBtn = document.querySelector('.loadingbtn')
 
 previewBtn.addEventListener('click', (e) => {
     if (form.description.value) {
@@ -20,6 +22,10 @@ previewBtn.addEventListener('click', (e) => {
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    submitBtn.classList.add('d-none')
+    loadingBtn.classList.remove('d-none')
+
 
     projectNameError.textContent = ''
     imageError.textContent = ''
@@ -33,6 +39,8 @@ form.addEventListener('submit', async (e) => {
         })
         const result = await res.json();
         if (result.err) {
+            loadingBtn.classList.add('d-none')
+            submitBtn.classList.remove('d-none')
             projectNameError.textContent = result.err.projectName
             imageError.textContent = result.err.image
             descriptionError.textContent = result.err.description
