@@ -34,6 +34,6 @@ To build and run the project locally, use the following commands:
    npm start
 
 
-![image1](/images/pms1.jpeg)
-![image2](/images/pms2.jpeg)
+![image1](https://res.cloudinary.com/dw3uvmlbu/image/upload/v1723016553/Project_Management_System_1.09pm_08-07_gwgrv1.jpg)
+![image2](https://res.cloudinary.com/dw3uvmlbu/image/upload/v1723016553/Project_Management_System_1.09pm_08-07_1_grocm5.jpg)
 
