@@ -1,7 +1,5 @@
 # PMS
 
-## Project Description
-
 PMS is a Project Management System (PMS) designed to facilitate efficient project collaboration and task management. The application supports two roles: **Manager** and **Team Member**.
 
 - **Manager**:
