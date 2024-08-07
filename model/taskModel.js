@@ -1,7 +1,10 @@
 const mongoose  = require('mongoose')
 const Schema = mongoose.Schema
 
+
 const ImageSchema = require('./imageSchema')
+const Submission = require('./submissionModel')
+const { cloudinary } = require('../cloudinary')
 
 const TaskSchema = Schema({
     taskName:{
@@ -39,6 +42,14 @@ const TaskSchema = Schema({
         default : false
     },
     image :[ImageSchema]
+})
+
+TaskSchema.post('findOneAndDelete',async(task)=>{
+    if(task){
+        const submission = await Submission.findOne({task : task._id})
+        await cloudinary.uploader.destroy(submission.uploadSubmission.filename)
+        await submission.delete();
+    }
 })
 
 module.exports = mongoose.model('Task', TaskSchema)

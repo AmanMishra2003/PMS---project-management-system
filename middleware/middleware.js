@@ -91,3 +91,11 @@ module.exports.submissionUserAuthorization = asyncHandler(async(req,res,next)=>{
     res.redirect('/project')
 })
 
+module.exports.checkManagerHaveTeamMembers = asyncHandler(async(req,res,next)=>{
+    const user = await User.findById(res.locals.currentUser._id);
+    if(user.member.length>0){
+        return next()
+    }
+    res.redirect('/user/member/signup');
+})
+

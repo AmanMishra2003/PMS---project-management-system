@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
-const {isEmail} = require('validator')
+
+//model
+const Task = require('./taskModel')
+const Submission = require('./submissionModel')
+
 const argon2 = require('argon2');
 const Schema = mongoose.Schema
 // const opts = {toJSON :{virtuals:true}} //this virtuals : true indicate that virtual property should be included in the output
@@ -75,6 +79,22 @@ UserSchema.statics.CompareAndLogin = async function(email,password){
     return user;
 }
 
+UserSchema.post('findOneAndDelete',async(user)=>{
+    if(user){
+        //if find task with id of deleted member this will change assignTo none
+        const tasks = await Task.find({assignTo : user._id});
+        tasks.forEach(async(ele)=>{
+            ele.assignTo = null
+            await ele.save();
+        })
+
+        //if find submission with id of deleted member this will delete the submission
+        await Submission.deleteMany({
+            author : user._id
+        })
+
+    }
+})
 
 
 module.exports = mongoose.model('User', UserSchema)

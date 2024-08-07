@@ -35,9 +35,9 @@
                             </a>
                         </div>
                         <% if (currentUser.role!=='teammember') { %>
-                            <div class=" col-12 col-md-6 col-lg-2 px-0 text-center text-lg-start text-capitalize mb-2 mb-lg-0"><span class="text-white fw-bold d-block-inline d-lg-none m-0">Assign To: </span><%= ele.assignTo.fullname %></div>
+                            <div class=" col-12 col-md-6 col-lg-2 px-0 text-center text-lg-start text-capitalize mb-2 mb-lg-0"><span class="text-white fw-bold d-block-inline d-lg-none m-0">Assign To: </span><%=ele.assignTo? ele.assignTo.fullname : '' %></div>
                         <% } else { %>
-                            <div class=" col-12 col-md-6 col-lg-2 px-0 text-center text-lg-start text-capitalize mb-2 mb-lg-0"><span class="text-white fw-bold d-block-inline d-lg-none m-0">Assign By: </span><%= ele.author.fullname %></div> 
+                            <div class=" col-12 col-md-6 col-lg-2 px-0 text-center text-lg-start text-capitalize mb-2 mb-lg-0"><span class="text-white fw-bold d-block-inline d-lg-none m-0">Assign By: </span><%= ele.author? ele.author.fullname :'' %></div> 
                         <% } %>
                         <div class=" col-12 col-md-6 col-lg-2 text-center text-lg-start px-0"><span class="text-white fw-bold d-block-inline d-lg-none m-0">Completed: </span><%= ele.completed?'🟢Completed':'🔴Pending' %></div>
                     </div>

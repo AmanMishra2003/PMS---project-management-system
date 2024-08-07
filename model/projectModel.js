@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 
+//model
+const Task = require('./taskModel')
+
 const Schema = mongoose.Schema
 
 const ImageSchema = require('./imageSchema')
@@ -34,6 +37,16 @@ const ProjectSchema = Schema({
     author :{
         type:Schema.Types.ObjectId,
         ref: 'User'
+    }
+})
+
+ProjectSchema.post('findOneAndDelete',async(project)=>{
+    if(project){
+        await Task.deleteMany({
+            _id :{
+                $in : project.task
+            }
+        })
     }
 })
 

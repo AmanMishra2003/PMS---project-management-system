@@ -89,8 +89,8 @@ module.exports.removeTeamMember = asyncHandler(async (req, res) => {
     const { memberId } = req.params;
     const id = res.locals.currentUser._id;
     const manager = await User.findById(id);
-    const member = await User.findById(memberId)
-    manager.member.pull(member)
+    const memberfind = await User.findById(memberId)
+    manager.member.pull(memberfind);
     await manager.save();
     await User.findByIdAndDelete(memberId)
     res.redirect('/user/member')

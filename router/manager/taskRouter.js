@@ -4,7 +4,7 @@ const router = express.Router({mergeParams:true})
 
 const {storage} = require('../../cloudinary')
 const {taskValidate} = require('../../joi/validate')
-const {taskAuthorCheck,AuthorizeManager} = require('../../middleware/middleware')
+const {taskAuthorCheck,AuthorizeManager,checkManagerHaveTeamMembers} = require('../../middleware/middleware')
 
 //multer middleware 
 const multer = require('multer')
@@ -22,6 +22,7 @@ router.route('/')
 router.route('/assign')
     .get(
         AuthorizeManager,
+        checkManagerHaveTeamMembers,
         taskController.assignTaskPage
     )   
 
@@ -46,6 +47,7 @@ router.route('/:id/edit')
     .get(
         AuthorizeManager,
         taskAuthorCheck,
+        checkManagerHaveTeamMembers,
         taskController.editTaskForm
     )
 

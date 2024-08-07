@@ -50,7 +50,7 @@
                                     <div
                                         class=" col-12 col-md-6 col-lg-2 px-0 text-center text-lg-start text-capitalize mb-2 mb-lg-0">
                                         <span class="text-white fw-bold d-block-inline d-lg-none m-0">Assign To: </span>
-                                        <%= ele.task.assignTo.fullname %>
+                                        <%= ele.task.assignTo ? ele.task.assignTo.fullname :'' %>
                                     </div>
                                     <div class=" col-12 col-md-6 col-lg-2 text-center text-lg-start px-0">
                                         <span class="text-white fw-bold d-block-inline d-lg-none m-0">Completed:</span>
