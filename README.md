@@ -1,5 +1,4 @@
 # PMS
-
 PMS is a Project Management System (PMS) designed to facilitate efficient project collaboration and task management. The application supports two roles: **Manager** and **Team Member**.
 
 - **Manager**:
@@ -33,4 +32,8 @@ To build and run the project locally, use the following commands:
 2. **Start the Application:**:
    ```bash
    npm start
+
+
+![image1](/images/pms1.jpeg)
+![image2](/images/pms2.jpeg)
 
