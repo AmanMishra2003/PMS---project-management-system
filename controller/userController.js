@@ -21,7 +21,7 @@ const createToken = (id) => {
 }
 
 module.exports.loginform = (req, res) => {
-    res.render('auth/login')
+    res.render('Auth/login')
 }
 
 module.exports.login = async (req, res) => {
@@ -42,11 +42,11 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.sigupform = (req, res) => {
-    res.render('auth/signup')
+    res.render('Auth/signup')
 }
 
 module.exports.memberSignUpForm = (req, res) => {
-    res.render('auth/membersignup')
+    res.render('Auth/membersignup')
 }
 
 module.exports.signup = async (req, res) => {
@@ -82,7 +82,7 @@ module.exports.memberSignUp = async (req, res) => {
 module.exports.teamMember = asyncHandler(async (req, res) => {
     const id = res.locals.currentUser._id;
     const manager = await User.findById(id).populate('member');
-    res.render('auth/allteamMember', { manager })
+    res.render('Auth/allteamMember', { manager })
 })
 
 module.exports.removeTeamMember = asyncHandler(async (req, res) => {
