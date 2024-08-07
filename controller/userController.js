@@ -130,7 +130,24 @@ module.exports.allSubmission = asyncHandler(async (req, res) => {
             ]
         },
     ]);
-    const submissionInDateOrder = Object.groupBy(submissions, (({ submissionDate }) => formatDate(submissionDate)))
+
+    //my deploy application render.com doesn't support Object.groupBy
+    // const submissionInDateOrder = Object.groupBy(submissions, (({ submissionDate }) => formatDate(submissionDate)))
+
+    //this is the alernative
+    const submissionInDateOrder = submissions.reduce((acc, submission) => {
+        const formattedDate = formatDate(submission.submissionDate);
+        
+        // Initialize the array for the date if not already present
+        if (!acc[formattedDate]) {
+          acc[formattedDate] = [];
+        }
+        
+        // Add submission to the appropriate date group
+        acc[formattedDate].push(submission);
+        
+        return acc;
+      }, {});
     res.render('submission/showSubmission', { submissionInDateOrder, formatDate })
 })
 
