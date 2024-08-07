@@ -10,7 +10,7 @@ const methodOverride = require('method-override')
 const cookieParser = require('cookie-parser')
 
 //connection to database
-const DbUrl = process.env.DBURL
+const DbUrl = process.env.DBURL || 'mongodb://localhost:27017/codeSoftPMS'
 mongoose.connect(DbUrl).then(()=>{
     console.log('Database Connected!!')
 }).catch((err)=>{
